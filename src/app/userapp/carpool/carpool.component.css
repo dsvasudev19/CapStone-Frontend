@@ -1,0 +1,70 @@
+/* carpool.component.css */
+.gradient-text {
+    background: linear-gradient(to right, #991b1b, #1e3a8a);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  
+  .logo-animation {
+    animation: pulse 2s infinite;
+  }
+  
+  .card-hover-effect {
+    transition: transform 0.3s ease;
+  }
+  
+  .card-hover-effect:hover {
+    transform: translateY(-5px);
+  }
+  
+  @keyframes pulse {
+    0% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.8;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+  
+  .gradient-bg {
+    background: linear-gradient(135deg, #ff4444 0%, #ff8f8f 100%);
+  }
+  
+  .search-animation {
+    animation: float 3s infinite ease-in-out;
+  }
+  
+  @keyframes float {
+    0% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+    100% {
+      transform: translateY(0px);
+    }
+  }
+
+  .nav-link {
+    position: relative;
+  }
+  
+  .nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: #991b1b;
+    transition: width 0.3s ease;
+  }
+  
+  .nav-link:hover::after {
+    width: 100%;
+  }

@@ -1,0 +1,184 @@
+/* Custom animations */
+@keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-20px); }
+    100% { transform: translateY(0px); }
+  }
+  
+  @keyframes pulse-glow {
+    0% { box-shadow: 0 0 0 0 rgba(153, 27, 27, 0.7); }
+    70% { box-shadow: 0 0 0 15px rgba(153, 27, 27, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(153, 27, 27, 0); }
+  }
+
+  @keyframes slide-in {
+    from {
+      transform: translateX(-100%);
+      opacity: 0;
+    }
+    to {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+  
+  /* Custom utility classes */
+  .floating-animation {
+    animation: float 6s ease-in-out infinite;
+  }
+  
+  .pulse-glow {
+    animation: pulse-glow 2s infinite;
+  }
+  
+  .slide-in {
+    animation: slide-in 0.5s ease-out;
+  }
+  
+  /* Glass morphism effects */
+  .glass-card {
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 8px 32px 0 rgba(30, 58, 138, 0.37);
+  }
+  
+  /* Gradient text */
+  .gradient-text {
+    background: linear-gradient(to right, #991b1b, #1e3a8a);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background: #991b1b;
+    border-radius: 4px;
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    background: #7f1d1d;
+  }
+  
+  /* Hero section particle background */
+  .particle-background {
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .particle-background::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at center, rgba(153, 27, 27, 0.1) 0%, rgba(255, 255, 255, 0) 70%);
+  }
+  
+  /* Card hover effects */
+  .feature-card {
+    transition: all 0.3s ease;
+  }
+  
+  .feature-card:hover {
+    transform: translateY(-10px) scale(1.02);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Testimonial card styles */
+  .testimonial-card {
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .testimonial-card::before {
+    content: '"';
+    position: absolute;
+    top: -20px;
+    left: 20px;
+    font-size: 80px;
+    color: rgba(153, 27, 27, 0.1);
+    font-family: serif;
+  }
+  
+  /* Custom button styles */
+  .custom-button {
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+  }
+  
+  .custom-button::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: width 0.6s ease, height 0.6s ease;
+  }
+  
+  .custom-button:hover::before {
+    width: 300px;
+    height: 300px;
+  }
+  
+  /* Navigation menu hover effect */
+  .nav-link {
+    position: relative;
+  }
+  
+  .nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: #991b1b;
+    transition: width 0.3s ease;
+  }
+  
+  .nav-link:hover::after {
+    width: 100%;
+  }
+  
+  /* Stats counter animation */
+  .stat-counter {
+    counter-reset: stat;
+    animation: count 2s forwards;
+  }
+  
+  @keyframes count {
+    from {
+      counter-increment: stat 0;
+    }
+    to {
+      counter-increment: stat var(--target);
+    }
+  }
+  
+  /* Responsive design adjustments */
+  @media (max-width: 768px) {
+    .container {
+      padding-left: 1rem;
+      padding-right: 1rem;
+    }
+    
+    .floating-animation {
+      animation: none;
+    }
+  }

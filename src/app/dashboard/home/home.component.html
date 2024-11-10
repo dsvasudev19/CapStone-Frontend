@@ -1,0 +1,43 @@
+<div class="dashboard-container">
+    <!-- Header -->
+    <div class="dashboard-header">
+      <h1 class="dashboard-title">Dashboard Overview</h1>
+      <p class="dashboard-subtitle">Welcome to your transportation management system</p>
+    </div>
+  
+    <!-- Metrics Cards -->
+    <div class="metrics-grid">
+      <div *ngFor="let metric of metrics" class="metric-card">
+        <div class="metric-content">
+          <div>
+            <p class="metric-title">{{metric.title}}</p>
+            <h3 class="metric-value">{{metric.value}}</h3>
+          </div>
+          <div class="metric-icon">
+            <i [class]="metric.icon"></i>
+          </div>
+        </div>
+        <!-- <div class="metric-trend">
+          <span [class]="metric.trend > 0 ? 'trend-up' : 'trend-down'">
+            {{metric.trend}}% 
+          </span>
+          <span class="trend-label">vs last month</span>
+        </div> -->
+      </div>
+    </div>
+  
+    <!-- Charts -->
+    <div class="charts-grid">
+      <!-- User Registration Chart -->
+      <div class="chart-card">
+        <h2 class="chart-title">User Registrations</h2>
+        <canvas #userChart></canvas>
+      </div>
+  
+      <!-- Bus Usage Chart -->
+      <div class="chart-card">
+        <h2 class="chart-title">Bus Usage Analytics</h2>
+        <canvas #busChart></canvas>
+      </div>
+    </div>
+  </div>

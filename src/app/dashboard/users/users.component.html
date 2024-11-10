@@ -1,0 +1,239 @@
+<div class="mx-auto relative">
+  <div *ngIf="showSuccessToast" class="absolute right-0 bg-green-100 border-t border-b border-green-500 text-green-700 px-4 py-1.5 rounded" role="alert">
+    <p class="text-sm">User operation completed successfully.</p>
+  </div>
+  <div *ngIf="showErrorToast" class="absolute right-0 bg-red-100 border-t border-b border-red-500 text-red-700 px-4 py-1.5 rounded" role="alert">
+    <p class="text-sm">User operation Failed</p>
+  </div>
+  <div class="bg-white shadow-md rounded-lg overflow-hidden">
+    <div class="px-6 py-4 border-b border-gray-200 flex justify-between">
+      <h2 class="text-xl font-semibold text-gray-800">User Management</h2>
+      <button
+        class="px-4 py-2 bg-emerald-500 text-white rounded-md hover:bg-green-700 flex items-center"
+        (click)="openModal()"
+      >
+        Add User
+      </button>
+    </div>
+
+    <div
+      *ngIf="loading"
+      class="min-h-screen dark:bg-slate-800 gap-6 flex items-center justify-center"
+    >
+      <div
+        class="w-36 h-36 border-8 border-dashed rounded-full animate-spin"
+        style="border-color: transparent transparent #8b5cf6 #6366f1"
+      ></div>
+    </div>
+
+    <table
+      *ngIf="!loading"
+      class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400"
+    >
+      <thead
+        class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
+      >
+        <tr>
+          <th scope="col" class="px-6 py-3">User Id</th>
+          <th scope="col" class="px-6 py-3">Name</th>
+          <th scope="col" class="px-6 py-3">Email</th>
+          <th scope="col" class="px-6 py-3">Phone</th>
+          <th scope="col" class="px-6 py-3">Role</th>
+          <th scope="col" class="px-6 py-3">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          *ngFor="let user of users"
+          class="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
+        >
+          <th
+            scope="row"
+            class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+          >
+            {{ user.id }}
+          </th>
+          <td class="px-6 py-4 flex">{{ user.name }}</td>
+          <td class="px-6 py-4">{{ user.email }}</td>
+          <td class="px-6 py-4">+91 {{ user.phone }}</td>
+          <td class="px-6 py-4">{{ user.role }}</td>
+          <td class="flex justify-end mr-6 mt-3 gap-3">
+            <!-- <a class="cursor-pointer">
+              <svg
+                width="28px"
+                height="28px"
+                viewBox="0 0 1024 1024"
+                class="icon"
+                version="1.1"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="#000000"
+              >
+                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                <g
+                  id="SVGRepo_tracerCarrier"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                ></g>
+                <g id="SVGRepo_iconCarrier">
+                  <path
+                    d="M916.668 273.393l-66.711 66.711-168.533-168.532 66.712-66.712c52.639-52.639 132.855-57.328 179.24-10.942 23.311 23.309 33.783 55.149 31.698 87.511-1.802 32.647-16.207 65.765-42.406 91.964z"
+                    fill="#FF3B30"
+                  ></path>
+                  <path
+                    d="M762.348 163.22c-2.195 0-4.427-0.49-6.534-1.518-7.41-3.613-10.494-12.555-6.877-19.972 21.34-43.746 70.902-63.624 110.446-44.341 7.41 3.618 10.494 12.558 6.876 19.973-3.623 7.408-12.551 10.484-19.976 6.879-24.737-12.065-56.382 1.652-70.494 30.588-2.589 5.305-7.906 8.391-13.441 8.391z"
+                    fill="#FFFFFF"
+                  ></path>
+                  <path
+                    d="M143.188 708.155L697.96 155.654l168.981 168.981L304.964 883.58M161.098 920.034l-97.765 38.158 34.206-101.717z"
+                    fill="#152B3C"
+                  ></path>
+                  <path
+                    d="M240.709 708.755l-62.541 0.002-34.98-0.602-45.649 148.32 63.556 63.558 143.869-36.453 4.897-45.216 0.025-60.384-70.581 9.731z"
+                    fill="#FCB814"
+                  ></path>
+                  <path
+                    d="M861.579 62.897c7.356 4.411 14.285 9.667 20.559 15.942 23.308 23.308 33.781 55.149 31.695 87.509-1.8 32.649-16.206 65.764-42.405 91.965l-36.552 36.552 30.159 30.159 51.631-51.631c26.2-26.201 40.605-59.316 42.407-91.965 2.087-32.359-8.388-64.201-31.696-87.509-18.021-18.023-41.167-28.236-65.798-31.022z"
+                    fill=""
+                  ></path>
+                  <path
+                    d="M686.755 164.588l91.469 117.335c16.291 20.899 14.49 50.655-4.205 69.435L309.977 817.552l-5.013 66.028 561.977-558.945L697.96 155.654l-11.205 8.934z"
+                    fill=""
+                  ></path>
+                  <path
+                    d="M269.107 864.233l-129.423 34.388 21.411 21.412 143.869-36.453 4.897-45.216 0.025-60.384-15.239 2.101z"
+                    fill=""
+                  ></path>
+                  <path
+                    d="M317.969 621.444a14.888 14.888 0 0 1-10.561-4.375c-5.834-5.831-5.834-15.29 0-21.121L641.67 261.687c5.836-5.834 15.287-5.834 21.121 0 5.834 5.831 5.834 15.29 0 21.121L328.529 617.07a14.887 14.887 0 0 1-10.56 4.374z"
+                    fill="#FFFFFF"
+                  ></path>
+                </g>
+              </svg>
+            </a> -->
+            <a (click)="deleteUser(user.id)" class="cursor-pointer">
+              <svg
+                width="28px"
+                height="28px"
+                viewBox="0 0 24.00 24.00"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                stroke="#fa0000"
+                stroke-width="0.048"
+              >
+                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                <g
+                  id="SVGRepo_tracerCarrier"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                ></g>
+                <g id="SVGRepo_iconCarrier">
+                  <path
+                    d="M3 6.38597C3 5.90152 3.34538 5.50879 3.77143 5.50879L6.43567 5.50832C6.96502 5.49306 7.43202 5.11033 7.61214 4.54412C7.61688 4.52923 7.62232 4.51087 7.64185 4.44424L7.75665 4.05256C7.8269 3.81241 7.8881 3.60318 7.97375 3.41617C8.31209 2.67736 8.93808 2.16432 9.66147 2.03297C9.84457 1.99972 10.0385 1.99986 10.2611 2.00002H13.7391C13.9617 1.99986 14.1556 1.99972 14.3387 2.03297C15.0621 2.16432 15.6881 2.67736 16.0264 3.41617C16.1121 3.60318 16.1733 3.81241 16.2435 4.05256L16.3583 4.44424C16.3778 4.51087 16.3833 4.52923 16.388 4.54412C16.5682 5.11033 17.1278 5.49353 17.6571 5.50879H20.2286C20.6546 5.50879 21 5.90152 21 6.38597C21 6.87043 20.6546 7.26316 20.2286 7.26316H3.77143C3.34538 7.26316 3 6.87043 3 6.38597Z"
+                    fill="#ff0000"
+                  ></path>
+                  <path
+                    fill-rule="evenodd"
+                    clip-rule="evenodd"
+                    d="M11.5956 22.0001H12.4044C15.1871 22.0001 16.5785 22.0001 17.4831 21.1142C18.3878 20.2283 18.4803 18.7751 18.6654 15.8686L18.9321 11.6807C19.0326 10.1037 19.0828 9.31524 18.6289 8.81558C18.1751 8.31592 17.4087 8.31592 15.876 8.31592H8.12404C6.59127 8.31592 5.82488 8.31592 5.37105 8.81558C4.91722 9.31524 4.96744 10.1037 5.06788 11.6807L5.33459 15.8686C5.5197 18.7751 5.61225 20.2283 6.51689 21.1142C7.42153 22.0001 8.81289 22.0001 11.5956 22.0001ZM10.2463 12.1886C10.2051 11.7548 9.83753 11.4382 9.42537 11.4816C9.01321 11.525 8.71251 11.9119 8.75372 12.3457L9.25372 17.6089C9.29494 18.0427 9.66247 18.3593 10.0746 18.3159C10.4868 18.2725 10.7875 17.8856 10.7463 17.4518L10.2463 12.1886ZM14.5746 11.4816C14.9868 11.525 15.2875 11.9119 15.2463 12.3457L14.7463 17.6089C14.7051 18.0427 14.3375 18.3593 13.9254 18.3159C13.5132 18.2725 13.2125 17.8856 13.2537 17.4518L13.7537 12.1886C13.7949 11.7548 14.1625 11.4382 14.5746 11.4816Z"
+                    fill="#ff0000"
+                  ></path>
+                </g>
+              </svg>
+            </a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+<div *ngIf="isModalOpen" class="fixed inset-0 flex items-center justify-center z-50 bg-gray-900 bg-opacity-50">
+  <div class="bg-white rounded-lg w-[800px] p-8 shadow-xl">
+    <h2 class="text-3xl font-semibold mb-6 text-gray-800 border-b pb-4">Add New User</h2>
+    
+    <form (ngSubmit)="onSubmit()" #userForm="ngForm" class="space-y-6">
+      <!-- Two columns layout -->
+      <div class="grid grid-cols-2 gap-6">
+        <!-- Left column -->
+        <div class="space-y-6">
+          <div class="space-y-2">
+            <label for="name" class="text-sm font-medium text-gray-700">Full Name</label>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-200"
+              [(ngModel)]="newUser.name"
+              required
+              placeholder="Enter full name"
+            />
+          </div>
+
+          <div class="space-y-2">
+            <label for="email" class="text-sm font-medium text-gray-700">Email Address</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-200"
+              [(ngModel)]="newUser.email"
+              required
+              placeholder="Enter email address"
+            />
+          </div>
+        </div>
+
+        <!-- Right column -->
+        <div class="space-y-6">
+          <div class="space-y-2">
+            <label for="phone" class="text-sm font-medium text-gray-700">Phone Number</label>
+            <input
+              type="text"
+              id="phone"
+              name="phone"
+              class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-200"
+              [(ngModel)]="newUser.phone"
+              required
+              placeholder="Enter phone number"
+            />
+          </div>
+
+          <div class="space-y-2">
+            <label for="role" class="text-sm font-medium text-gray-700">User Role</label>
+            <select
+              id="role"
+              name="role"
+              class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-200 bg-white"
+              [(ngModel)]="newUser.role"
+              required
+              disabled
+            >
+              <option value="" disabled selected>Select a role</option>
+              <option value="USER">User</option>
+              <option value="OPERATOR">Operator</option>
+              <option value="ADMIN">Admin</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Action buttons -->
+      <div class="flex justify-end gap-4 pt-6 border-t mt-6">
+        <button
+          type="button"
+          (click)="closeModal()"
+          class="px-6 py-3 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition duration-200 font-medium"
+        >
+          Cancel
+        </button>
+        <button
+          type="submit"
+          class="px-6 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition duration-200 font-medium"
+        >
+          Add User
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

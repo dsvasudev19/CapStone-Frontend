@@ -1,0 +1,57 @@
+<!-- transaction-dashboard.component.html -->
+<div class="mx-auto max-w-7xl">
+    <div class="bg-white shadow-md rounded-lg overflow-hidden">
+      <div class="px-6 py-4 border-b border-gray-200 flex justify-between items-center">
+        <h2 class="text-xl font-semibold text-gray-800">Transaction History</h2>
+        <button 
+          (click)="exportToExcel()" 
+          class="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 flex items-center"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+          </svg>
+          Export to Excel
+        </button>
+      </div>
+      
+      <div class="overflow-x-auto">
+        <table class="min-w-full divide-y divide-gray-200">
+          <thead class="bg-gray-50">
+            <tr>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Transaction ID</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">User ID</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Order ID</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Amount</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Created At</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+            </tr>
+          </thead>
+          <tbody class="bg-white divide-y divide-gray-200">
+            <tr *ngFor="let transaction of transactions">
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{transaction.transactionId}}</td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{transaction.userId}}</td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{transaction.orderId}}</td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                {{formatAmount(transaction.amount, 'INR')}}
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm font-medium" [ngClass]="getStatusClass(transaction.status)">
+                {{transaction.status}}
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                {{formatDateTime(transaction.createdAt)}}
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                <button 
+                  (click)="onViewDetails(transaction.transactionId)" 
+                  class="text-indigo-600 hover:text-indigo-900"
+                >
+                  View Details
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>

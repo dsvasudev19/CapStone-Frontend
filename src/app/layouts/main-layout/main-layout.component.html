@@ -1,0 +1,196 @@
+<!-- sidebar.component.html -->
+<div class="min-h-screen bg-gray-50">
+  <!-- Mobile Menu Button -->
+  <button
+    (click)="toggleSidebar()"
+    class="fixed top-4 left-4 z-50 p-2 rounded-lg bg-white shadow-lg border sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-emerald-500/50"
+  >
+    <span class="sr-only">Toggle Menu</span>
+    <svg
+      class="w-6 h-6 text-gray-600"
+      fill="none"
+      stroke="currentColor"
+      viewBox="0 0 24 24"
+    >
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        d="M4 6h16M4 12h16M4 18h16"
+      />
+    </svg>
+  </button>
+
+  <!-- Sidebar -->
+  <aside
+    id="sidebar"
+    class="fixed top-0 left-0 z-40 h-screen w-64 transition-transform duration-300 ease-in-out transform -translate-x-full sm:translate-x-0"
+    [ngClass]="{ 'translate-x-0': isSideBarOpen }"
+  >
+    <div
+      class="h-full bg-gradient-to-b from-gray-700 to-gray-800 text-gray-100"
+    >
+      <!-- Logo Area -->
+      <div class="px-6 py-8 border-b border-gray-600/30">
+        <h1 class="text-2xl font-bold text-gray-100">Admin Panel</h1>
+      </div>
+
+      <!-- Navigation Menu -->
+      <nav class="px-2 py-2">
+        <ul class="">
+          <li *ngFor="let item of menuItems">
+            <a
+              [routerLink]="item.route"
+              [ngClass]="{
+                'flex items-center px-4 py-3 rounded-lg transition-all duration-200': true,
+                'bg-gray-600/50 text-white shadow-sm':
+                  currentPath === item.route,
+                'text-gray-300 hover:bg-gray-600/30 hover:text-white':
+                  currentPath !== item.route
+              }"
+            > <lucide-icon [name]="item.icon" class="text-xl opacity-90"></lucide-icon>
+              
+              <span class="ml-3 font-medium">{{ item.label }}</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+
+      <!-- User Profile Section -->
+      <div
+        class="absolute bottom-0 w-full p-4 bg-gray-900/20 border-t border-gray-600/20"
+      >
+        <div class="flex items-center space-x-3">
+          <img
+            src="/user.png"
+            alt="Profile"
+            class="w-10 h-10 rounded-full border-2 border-gray-400/30"
+          />
+          <div>
+            <p class="font-medium text-gray-200">Admin User</p>
+            <p class="text-sm text-gray-400">adminmail</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Main Content Area -->
+  <div class="sm:ml-64 min-h-screen">
+    <!-- Top Navigation Bar -->
+    <header class="bg-white shadow-sm">
+      <div class="flex items-center justify-between px-4 py-3">
+        <div class="flex-1 max-w-xl">
+          <div class="relative">
+            <input
+              type="text"
+              placeholder="Search..."
+              class="w-full pl-10 pr-4 py-2 rounded-lg border border-gray-200 focus:border-emerald-500/50 focus:ring-2 focus:ring-emerald-500/20 transition-colors duration-200 placeholder-gray-400"
+            />
+            <svg
+              class="absolute left-3 top-2.5 h-5 w-5 text-gray-400"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+              />
+            </svg>
+          </div>
+        </div>
+
+        <!-- Right Side Actions -->
+        <div class="flex items-center space-x-3">
+          <!-- Notifications -->
+          <button
+            class="p-2.5 text-gray-500 hover:text-gray-700 rounded-lg hover:bg-gray-100/80 active:bg-gray-200 transition-colors duration-150"
+          >
+            <div class="relative">
+              <svg
+                class="w-6 h-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"
+                />
+              </svg>
+              <span
+                class="absolute -top-1 -right-1 bg-rose-500 text-white text-xs rounded-full h-4 w-4 flex items-center justify-center"
+              >
+                2
+              </span>
+            </div>
+          </button>
+
+          <!-- Settings -->
+          <button
+            class="p-2.5 text-gray-500 hover:text-gray-700 rounded-lg hover:bg-gray-100/80 active:bg-gray-200 transition-colors duration-150"
+          >
+            <svg
+              class="w-6 h-6"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"
+              />
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+              />
+            </svg>
+          </button>
+
+          <!-- Profile Dropdown Trigger -->
+          <button (click)="logOut()"
+            class="p-1.5 rounded-lg hover:bg-gray-100/80 active:bg-gray-200 transition-colors duration-150"
+          >
+            <svg
+              width="28px"
+              height="28px"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              transform="rotate(180)"
+            >
+              <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+              <g
+                id="SVGRepo_tracerCarrier"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              ></g>
+              <g id="SVGRepo_iconCarrier">
+                <path
+                  fill-rule="evenodd"
+                  clip-rule="evenodd"
+                  d="M3.5 9.56757V14.4324C3.5 16.7258 3.5 17.8724 4.22161 18.5849C4.87719 19.2321 5.89578 19.2913 7.81846 19.2968C7.71686 18.6224 7.69563 17.8168 7.69029 16.8689C7.68802 16.4659 8.01709 16.1374 8.42529 16.1351C8.83348 16.1329 9.16624 16.4578 9.16851 16.8608C9.17451 17.9247 9.20249 18.6789 9.30898 19.2512C9.41158 19.8027 9.57634 20.1219 9.81626 20.3588C10.089 20.6281 10.4719 20.8037 11.1951 20.8996C11.9395 20.9985 12.9261 21 14.3407 21H15.3262C16.7407 21 17.7273 20.9985 18.4717 20.8996C19.1949 20.8037 19.5778 20.6281 19.8505 20.3588C20.1233 20.0895 20.3011 19.7114 20.3983 18.9975C20.4984 18.2626 20.5 17.2885 20.5 15.8919V8.10811C20.5 6.71149 20.4984 5.73743 20.3983 5.0025C20.3011 4.28855 20.1233 3.91048 19.8505 3.6412C19.5778 3.37192 19.1949 3.19635 18.4717 3.10036C17.7273 3.00155 16.7407 3 15.3262 3H14.3407C12.9261 3 11.9395 3.00155 11.1951 3.10036C10.4719 3.19635 10.089 3.37192 9.81626 3.6412C9.57634 3.87807 9.41158 4.19728 9.30898 4.74877C9.20249 5.32112 9.17451 6.07525 9.16851 7.1392C9.16624 7.54221 8.83348 7.8671 8.42529 7.86485C8.01709 7.86261 7.68802 7.53409 7.69029 7.13107C7.69563 6.18322 7.71686 5.37758 7.81846 4.70325C5.89578 4.70867 4.87719 4.76789 4.22161 5.41515C3.5 6.12759 3.5 7.27425 3.5 9.56757ZM5.93385 12.516C5.6452 12.231 5.6452 11.769 5.93385 11.484L7.90484 9.53806C8.19348 9.25308 8.66147 9.25308 8.95011 9.53806C9.23876 9.82304 9.23876 10.2851 8.95011 10.5701L8.24088 11.2703L15.3259 11.2703C15.7341 11.2703 16.0651 11.597 16.0651 12C16.0651 12.403 15.7341 12.7297 15.3259 12.7297L8.24088 12.7297L8.95011 13.4299C9.23876 13.7149 9.23876 14.177 8.95011 14.4619C8.66147 14.7469 8.19348 14.7469 7.90484 14.4619L5.93385 12.516Z"
+                  fill="#1C274C"
+                ></path>
+              </g>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Page Content -->
+    <main class="p-6 bg-gray-50/50">
+      <router-outlet></router-outlet>
+    </main>
+  </div>
+</div>

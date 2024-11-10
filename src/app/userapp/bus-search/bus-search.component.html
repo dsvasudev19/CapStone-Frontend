@@ -1,0 +1,264 @@
+<div class="main-wrapper overflow-hidden">
+    <!-- Header -->
+    <header class="bg-white/90 backdrop-blur-md shadow-lg py-4 sticky top-0 z-50">
+      <div class="container mx-auto flex justify-between items-center px-4">
+        <a href="/" class="text-4xl font-extrabold gradient-text logo-animation">Urban Transit</a>
+        
+        <nav class="hidden md:block">
+          <ul class="flex space-x-8 text-lg">
+            <li>
+              <a href="/bus-search" class="font-semibold text-red-600 nav-link hover:text-red-800 transition duration-300 flex items-center space-x-1">
+                <span>Bus Search</span>
+                <div class="w-1 h-1 bg-red-600 rounded-full"></div>
+              </a>
+            </li>
+            <!-- <li>
+              <a href="/live-tracking" class="font-semibold text-gray-600 hover:text-red-600 transition duration-300">
+                Live Tracking
+              </a>
+            </li> -->
+            <li>
+              <a href="/schedules" class="font-semibold text-gray-600 nav-link hover:text-red-600 transition duration-300">
+                Schedules
+              </a>
+            </li>
+            <li>
+              <a href="/routes" class="font-semibold text-gray-600 nav-link hover:text-red-600 transition duration-300">
+                Routes
+              </a>
+            </li>
+            <li>
+              <a href="/auth" class="px-6 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition duration-300 shadow-md hover:shadow-lg transform hover:scale-105">
+                Login
+              </a>
+            </li>
+          </ul>
+        </nav>
+  
+        <button class="md:hidden p-2 rounded-lg hover:bg-red-50 transition duration-300">
+          <svg class="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"/>
+          </svg>
+        </button>
+      </div>
+    </header>
+  
+    <div class="bg-gradient-to-b from-red-50 to-white min-h-screen flex flex-col">
+      <!-- Search Section -->
+      <div class="container mx-auto px-4 py-8">
+        <div class="bg-white/80 backdrop-blur-md rounded-xl shadow-2xl p-8 mb-12 transform hover:scale-[1.02] transition-all duration-300">
+          <div class="flex flex-col md:flex-row gap-8">
+            <!-- Search Form -->
+            <div class="flex-1">
+              <h2 class="text-3xl font-bold mb-6 text-red-600">Find Your Bus</h2>
+              <form [formGroup]="searchForm" (ngSubmit)="onSearch()" class="space-y-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div class="transform hover:scale-[1.01] transition-all duration-200">
+                    <label class="block text-gray-700 mb-2 font-semibold">From</label>
+                    <input
+                      type="text"
+                      formControlName="source"
+                      class="w-full px-4 py-3 border-2 border-red-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-400 focus:border-transparent"
+                      placeholder="Enter starting point"
+                    />
+                  </div>
+                  <div class="transform hover:scale-[1.01] transition-all duration-200">
+                    <label class="block text-gray-700 mb-2 font-semibold">To</label>
+                    <input
+                      type="text"
+                      formControlName="destination"
+                      class="w-full px-4 py-3 border-2 border-red-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-400 focus:border-transparent"
+                      placeholder="Enter destination"
+                    />
+                  </div>
+                </div>
+                <div class="transform hover:scale-[1.01] transition-all duration-200">
+                  <label class="block text-gray-700 mb-2 font-semibold">Preferred Time</label>
+                  <input
+                    type="time"
+                    formControlName="time"
+                    class="w-full px-4 py-3 border-2 border-red-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-400 focus:border-transparent"
+                  />
+                </div>
+                <button
+                  type="submit"
+                  class="w-full py-3 bg-gradient-to-r from-red-500 to-red-600 text-white rounded-lg hover:from-red-600 hover:to-red-700 transition duration-300 transform hover:scale-[1.02] font-semibold text-lg shadow-lg"
+                >
+                  Search Buses
+                </button>
+              </form>
+            </div>
+  
+            <!-- Animation -->
+            <div class="flex-1 flex items-center justify-center search-animation">
+                <img src="bus-search.jpg" alt="Carpool Service" 
+                  class="max-w-lg w-full h-auto rounded-xl shadow-lg">
+              </div>
+          </div>
+        </div>
+  
+        <!-- Bus List Section -->
+        <div *ngIf="!selectedBus" class="mb-16">
+          <h2 class="text-3xl font-bold mb-8 text-red-600 text-center">
+            Available Buses
+          </h2>
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Bus Cards -->
+            <div
+              *ngFor="let bus of availableBuses"
+              (click)="selectBus(bus)"
+              class="bg-white/80 backdrop-blur-md rounded-xl shadow-lg p-6 cursor-pointer transform hover:scale-[1.02] transition-all duration-300"
+            >
+              <div class="flex justify-between items-start mb-4">
+                <div>
+                  <h3 class="text-2xl font-bold text-red-600">
+                    {{ bus.routeNumber }}
+                  </h3>
+                  <p class="text-gray-600">{{ bus.routeName }}</p>
+                </div>
+                <span
+                  [class]="'px-3 py-1 rounded-full text-white ' + getStatusColor(bus.status)"
+                >
+                  {{ bus.status }}
+                </span>
+              </div>
+  
+              <div class="space-y-4 mb-6">
+                <!-- Occupancy Bar -->
+                <div class="space-y-2">
+                  <div class="flex justify-between items-center">
+                    <span class="text-sm text-gray-600">Current Occupancy</span>
+                    <span [class]="'font-bold ' + getOccupancyColor(bus.occupancy)">
+                      {{ bus.occupancy }}%
+                    </span>
+                  </div>
+                  <div class="h-2 bg-gray-200 rounded-full overflow-hidden">
+                    <div
+                      class="h-full bg-red-500 rounded-full transition-all duration-500"
+                      [style]="getOccupancyWidth(bus.occupancy)"
+                    ></div>
+                  </div>
+                </div>
+  
+                <div class="grid grid-cols-2 gap-4">
+                  <div class="bg-red-50 p-3 rounded-lg">
+                    <p class="text-sm text-gray-600">Next Stop</p>
+                    <p class="font-semibold text-gray-800">{{ bus.nextStop }}</p>
+                  </div>
+                  <div class="bg-red-50 p-3 rounded-lg">
+                    <p class="text-sm text-gray-600">Arrival</p>
+                    <p class="font-semibold text-gray-800">{{ bus.estimatedArrival }}</p>
+                  </div>
+                </div>
+              </div>
+  
+              <button class="w-full py-2 bg-red-100 text-red-600 rounded-lg hover:bg-red-200 transition duration-300 font-semibold">
+                View Details
+              </button>
+            </div>
+          </div>
+        </div>
+  
+        <!-- Bus Details Section -->
+        <div *ngIf="selectedBus" class="mb-16">
+          <div class="flex items-center mb-6">
+            <button
+              (click)="backToList()"
+              class="mr-4 p-2 rounded-lg hover:bg-red-100 transition duration-300"
+            >
+              <svg class="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+              </svg>
+            </button>
+            <h2 class="text-3xl font-bold text-red-600">
+              {{ selectedBus.routeNumber }} - {{ selectedBus.routeName }}
+            </h2>
+          </div>
+  
+          <!-- Bus Details Content -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="space-y-6">
+              <!-- Schedule -->
+              <div class="bg-white/80 backdrop-blur-md rounded-xl shadow-lg p-6">
+                <h3 class="text-xl font-bold mb-4 text-red-600">Schedule</h3>
+                <div class="grid grid-cols-2 gap-4">
+                  <div class="bg-red-50 p-4 rounded-lg">
+                    <p class="text-sm text-gray-600">Start Time</p>
+                    <p class="font-bold text-gray-800">{{ selectedBus.startTime }}</p>
+                  </div>
+                  <div class="bg-red-50 p-4 rounded-lg">
+                    <p class="text-sm text-gray-600">End Time</p>
+                    <p class="font-bold text-gray-800">{{ selectedBus.endTime }}</p>
+                  </div>
+                </div>
+              </div>
+  
+              <!-- Occupancy Predictions -->
+              <div class="bg-white/80 backdrop-blur-md rounded-xl shadow-lg p-6">
+                <h3 class="text-xl font-bold mb-4 text-red-600">Occupancy Predictions</h3>
+                <div class="space-y-4">
+                  <div>
+                    <div class="flex justify-between mb-2">
+                      <span>Morning Peak</span>
+                      <span class="font-bold">{{ selectedBus.predictedOccupancy.morning }}%</span>
+                    </div>
+                    <div class="h-2 bg-gray-200 rounded-full overflow-hidden">
+                      <div
+                        class="h-full bg-red-500 rounded-full transition-all duration-500"
+                        [style]="getOccupancyWidth(selectedBus.predictedOccupancy.morning)"
+                      ></div>
+                    </div>
+                  </div>
+                  <div>
+                    <div class="flex justify-between mb-2">
+                      <span>Afternoon Peak</span>
+                      <span class="font-bold">{{ selectedBus.predictedOccupancy.afternoon }}%</span>
+                    </div>
+                    <div class="h-2 bg-gray-200 rounded-full overflow-hidden">
+                      <div
+                        class="h-full bg-red-500 rounded-full transition-all duration-500"
+                        [style]="getOccupancyWidth(selectedBus.predictedOccupancy.afternoon)"
+                      ></div>
+                    </div>
+                  </div>
+                  <div>
+                    <div class="flex justify-between mb-2">
+                      <span>Evening Peak</span>
+                      <span class="font-bold">{{ selectedBus.predictedOccupancy.evening }}%</span>
+                    </div>
+                    <div class="h-2 bg-gray-200 rounded-full overflow-hidden">
+                      <div
+                        class="h-full bg-red-500 rounded-full transition-all duration-500"
+                        [style]="getOccupancyWidth(selectedBus.predictedOccupancy.evening)"
+                      ></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+  
+               <div class="bg-white/80 backdrop-blur-md rounded-xl shadow-lg p-6">
+
+                <!-- <h3 class="text-xl font-bold mb-4 text-red-600">Features</h3>
+                <div class="grid grid-cols-2 gap-4">
+                  <div class="flex items-center space-x-2">
+                    <svg class="w-5 h-5 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                    </svg>
+                    <span>WiFi Available</span>
+                  </div>
+                  <div class="flex items-center space-x-2">
+                    <svg class="w-5 h-5 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                    </svg>
+                    <span>USB Charging</span>
+                  </div>
+                </div> -->
+              </div>
+              <!-- <app-location-map></app-location-map> -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+</div>

@@ -1,0 +1,71 @@
+.dashboard-container {
+    @apply p-6 bg-gray-50 min-h-screen;
+  }
+  
+  .dashboard-header {
+    @apply mb-8;
+  }
+  
+  .dashboard-title {
+    @apply text-2xl font-bold text-gray-900;
+  }
+  
+  .dashboard-subtitle {
+    @apply text-gray-600;
+  }
+  
+  .metrics-grid {
+    @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8;
+  }
+  
+  .metric-card {
+    @apply bg-white rounded-lg shadow p-6 hover:shadow-lg transition-shadow;
+  }
+  
+  .metric-content {
+    @apply flex items-start justify-between;
+  }
+  
+  .metric-title {
+    @apply text-gray-600 text-sm;
+  }
+  
+  .metric-value {
+    @apply text-2xl font-bold text-gray-900;
+  }
+  
+  .metric-icon {
+    @apply p-2 bg-blue-50 rounded-lg;
+  }
+  
+  .metric-icon i {
+    @apply text-blue-600;
+  }
+  
+  .metric-trend {
+    @apply mt-4 flex items-center;
+  }
+  
+  .trend-up {
+    @apply text-green-500;
+  }
+  
+  .trend-down {
+    @apply text-red-500;
+  }
+  
+  .trend-label {
+    @apply text-gray-600 text-sm ml-2;
+  }
+  
+  .charts-grid {
+    @apply grid grid-cols-1 lg:grid-cols-2 gap-6;
+  }
+  
+  .chart-card {
+    @apply bg-white rounded-lg shadow p-6;
+  }
+  
+  .chart-title {
+    @apply text-lg font-semibold mb-4;
+  }

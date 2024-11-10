@@ -1,0 +1,525 @@
+<div class="mx-auto relative">
+  <div
+    *ngIf="showSuccessToast"
+    class="absolute right-0 bg-green-100 border-t border-b border-green-500 text-green-700 px-4 py-1.5 rounded"
+    role="alert"
+  >
+    <p class="text-sm">User operation completed successfully.</p>
+  </div>
+  <div
+    *ngIf="showErrorToast"
+    class="absolute right-0 bg-red-100 border-t border-b border-red-500 text-red-700 px-4 py-1.5 rounded"
+    role="alert"
+  >
+    <p class="text-sm">User operation Failed</p>
+  </div>
+  <div class="bg-white shadow-md rounded-lg overflow-hidden">
+    <div class="px-6 py-4 border-b border-gray-200 flex justify-between">
+      <h2 class="text-xl font-semibold text-gray-800">Bus Management</h2>
+      <button
+        class="px-4 py-2 bg-emerald-600 text-white rounded-md hover:bg-green-700 flex items-center"
+        (click)="openModal()"
+      >
+        Add Bus
+      </button>
+    </div>
+
+    <div
+      *ngIf="loading"
+      class="min-h-screen dark:bg-slate-800 gap-6 flex items-center justify-center"
+    >
+      <div
+        class="w-36 h-36 border-8 border-dashed rounded-full animate-spin"
+        style="border-color: transparent transparent #8b5cf6 #6366f1"
+      ></div>
+    </div>
+
+    <table
+      *ngIf="!loading"
+      class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400"
+    >
+      <thead
+        class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
+      >
+        <tr>
+          <th scope="col" class="px-6 py-3">Bus Id</th>
+          <th scope="col" class="px-6 py-3">Route</th>
+          <th scope="col" class="px-6 py-3">Capacity</th>
+          <th scope="col" class="px-6 py-3">Schedules</th>
+          <th scope="col" class="px-6 py-3">Status</th>
+          <th scope="col" class="px-6 py-3">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <ng-container *ngFor="let bus of buses">
+          <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+            <th
+              scope="row"
+              class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+            >
+              {{ bus.id }}
+            </th>
+            <td class="px-6 py-4">
+              {{ bus?.route?.name }} ({{ bus.routeId }})
+            </td>
+            <td class="px-6 py-4">{{ bus.capacity }}</td>
+            <td class="px-6 py-4">
+              <div
+                class="flex items-center gap-2 cursor-pointer"
+                (click)="bus.isScheduleOpen = !bus.isScheduleOpen"
+              >
+                <span
+                  >{{
+                    bus.busSchedules ? bus.busSchedules.length : "No"
+                  }}
+                  Schedules</span
+                >
+                <svg
+                  [class.rotate-180]="bus.isScheduleOpen"
+                  class="w-4 h-4 transition-transform duration-200"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M7 10L12 15L17 10"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  ></path>
+                </svg>
+              </div>
+            </td>
+            <td class="px-6 py-4">{{ bus.status }}</td>
+            <td class="flex justify-end mr-6 mt-3 gap-3">
+              <a class="cursor-pointer">
+                <button
+                (click)="openScheduleModal(bus.id)"
+                  class="text-white bg-green-400 hover:bg-green-600 p-1 rounded transition duration-150 flex gap-1"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-5 w-5"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M12 4v16m8-8H4"
+                    />
+                  </svg>Schedule
+                </button>
+              </a>
+              <a (click)="deleteBus(bus.id)" class="cursor-pointer">
+                <svg
+                  width="28px"
+                  height="28px"
+                  viewBox="0 0 24.00 24.00"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                  stroke="#fa0000"
+                  stroke-width="0.048"
+                >
+                  <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                  <g
+                    id="SVGRepo_tracerCarrier"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  ></g>
+                  <g id="SVGRepo_iconCarrier">
+                    <path
+                      d="M3 6.38597C3 5.90152 3.34538 5.50879 3.77143 5.50879L6.43567 5.50832C6.96502 5.49306 7.43202 5.11033 7.61214 4.54412C7.61688 4.52923 7.62232 4.51087 7.64185 4.44424L7.75665 4.05256C7.8269 3.81241 7.8881 3.60318 7.97375 3.41617C8.31209 2.67736 8.93808 2.16432 9.66147 2.03297C9.84457 1.99972 10.0385 1.99986 10.2611 2.00002H13.7391C13.9617 1.99986 14.1556 1.99972 14.3387 2.03297C15.0621 2.16432 15.6881 2.67736 16.0264 3.41617C16.1121 3.60318 16.1733 3.81241 16.2435 4.05256L16.3583 4.44424C16.3778 4.51087 16.3833 4.52923 16.388 4.54412C16.5682 5.11033 17.1278 5.49353 17.6571 5.50879H20.2286C20.6546 5.50879 21 5.90152 21 6.38597C21 6.87043 20.6546 7.26316 20.2286 7.26316H3.77143C3.34538 7.26316 3 6.87043 3 6.38597Z"
+                      fill="#ff0000"
+                    ></path>
+                    <path
+                      fill-rule="evenodd"
+                      clip-rule="evenodd"
+                      d="M11.5956 22.0001H12.4044C15.1871 22.0001 16.5785 22.0001 17.4831 21.1142C18.3878 20.2283 18.4803 18.7751 18.6654 15.8686L18.9321 11.6807C19.0326 10.1037 19.0828 9.31524 18.6289 8.81558C18.1751 8.31592 17.4087 8.31592 15.876 8.31592H8.12404C6.59127 8.31592 5.82488 8.31592 5.37105 8.81558C4.91722 9.31524 4.96744 10.1037 5.06788 11.6807L5.33459 15.8686C5.5197 18.7751 5.61225 20.2283 6.51689 21.1142C7.42153 22.0001 8.81289 22.0001 11.5956 22.0001ZM10.2463 12.1886C10.2051 11.7548 9.83753 11.4382 9.42537 11.4816C9.01321 11.525 8.71251 11.9119 8.75372 12.3457L9.25372 17.6089C9.29494 18.0427 9.66247 18.3593 10.0746 18.3159C10.4868 18.2725 10.7875 17.8856 10.7463 17.4518L10.2463 12.1886ZM14.5746 11.4816C14.9868 11.525 15.2875 11.9119 15.2463 12.3457L14.7463 17.6089C14.7051 18.0427 14.3375 18.3593 13.9254 18.3159C13.5132 18.2725 13.2125 17.8856 13.2537 17.4518L13.7537 12.1886C13.7949 11.7548 14.1625 11.4382 14.5746 11.4816Z"
+                      fill="#ff0000"
+                    ></path>
+                  </g>
+                </svg>
+              </a>
+            </td>
+          </tr>
+          <tr *ngIf="bus.isScheduleOpen">
+            <td colspan="6" class="px-6 py-4 bg-gray-50">
+              <div class="flex flex-wrap gap-3">
+                <ng-container
+                  *ngIf="
+                    bus.busSchedules && bus.busSchedules.length > 0;
+                    else noSchedules
+                  "
+                >
+                  <!-- <div
+                    *ngFor="let schedule of bus.busSchedules"
+                    class="flex gap-2 rounded"
+                  >
+                    <span
+                    class="px-3 py-1.5 text-xs font-medium rounded-full bg-orange-100 text-orange-800 hover:bg-orange-200 transition-colors"
+                    >
+                  Route: {{schedule.routeId}}
+                    </span>
+                    <span
+                      class="px-3 py-1.5 text-xs font-medium rounded-full bg-indigo-100 text-indigo-800 hover:bg-indigo-200 transition-colors"
+                    >
+                      Departure:
+                      {{ schedule.departureTime }}
+                    </span>
+                    <span
+                      class="px-3 py-1.5 text-xs font-medium rounded-full bg-emerald-100 text-emerald-800 hover:bg-emerald-200 transition-colors"
+                    >
+                      Arrival:
+                      {{
+                        schedule.destinationArrivalTime 
+                      }}
+                    </span>
+                  </div> -->
+                  <div
+                  *ngFor="let schedule of bus.busSchedules"
+                  class="inline-flex items-center bg-white border border-gray-200 rounded-lg shadow-sm p-1 hover:shadow-md transition-all duration-200 group"
+                >
+                  <!-- Route Badge -->
+                  <div 
+                    class="flex items-center space-x-2 px-3 py-1.5 rounded-l-lg bg-orange-100 group-hover:bg-orange-200 transition-colors"
+                  >
+                    <span class="flex items-center gap-1.5">
+                      <svg class="w-4 h-4 text-orange-600" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
+                      </svg>
+                      <span class="text-xs font-medium text-orange-800">
+                        Route {{schedule.routeId}}
+                      </span>
+                    </span>
+                  </div>
+            
+                  <!-- Departure Time -->
+                  <div 
+                    class="flex items-center space-x-2 px-3 py-1.5 bg-indigo-100 group-hover:bg-indigo-200 transition-colors"
+                  >
+                    <span class="flex items-center gap-1.5">
+                      <svg class="w-4 h-4 text-indigo-600" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                      <span class="text-xs font-medium text-indigo-800">
+                        {{schedule.departureTime}}
+                      </span>
+                    </span>
+                  </div>
+            
+                  <!-- Arrival Time -->
+                  <div 
+                    class="flex items-center space-x-2 px-3 py-1.5 rounded-r-lg bg-emerald-100 group-hover:bg-emerald-200 transition-colors"
+                  >
+                    <span class="flex items-center gap-1.5">
+                      <svg class="w-4 h-4 text-emerald-600" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                      </svg>
+                      <span class="text-xs font-medium text-emerald-800">
+                        {{schedule.destinationArrivalTime}}
+                      </span>
+                    </span>
+                  </div>
+                </div>
+                </ng-container>
+                <ng-template #noSchedules>
+                  <div class="text-sm text-gray-500 italic">
+                    No schedules available
+                  </div>
+                </ng-template>
+              </div>
+            </td>
+          </tr>
+        </ng-container>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Modal Backdrop -->
+<div
+  *ngIf="showModal"
+  class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+>
+  <!-- Modal Content -->
+  <div class="bg-white rounded-lg shadow-xl w-full max-w-md mx-4">
+    <!-- Modal Header -->
+    <div class="px-6 py-4 border-b border-gray-200">
+      <div class="flex justify-between items-center">
+        <h3 class="text-xl font-semibold text-gray-800">Add New Bus</h3>
+        <button
+          (click)="closeModal()"
+          class="text-gray-400 hover:text-gray-500"
+        >
+          <svg
+            class="h-6 w-6"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M6 18L18 6M6 6l12 12"
+            ></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Modal Body -->
+    <form [formGroup]="busForm" (ngSubmit)="onSubmit()" class="px-6 py-4">
+      <!-- Route Selection -->
+      <div class="mb-4">
+        <label
+          for="routeId"
+          class="block text-sm font-medium text-gray-700 mb-1"
+          >Route</label
+        >
+        <select
+          id="routeId"
+          formControlName="routeId"
+          class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-200"
+        >
+          <option value="">Select a route</option>
+          <option *ngFor="let route of routes" [value]="route.id">
+            {{ route.name }}
+          </option>
+        </select>
+        <div
+          *ngIf="
+            busForm.get('routeId')?.touched && busForm.get('routeId')?.invalid
+          "
+          class="text-red-500 text-sm mt-1"
+        >
+          Route is required
+        </div>
+      </div>
+
+      <!-- Capacity Input -->
+      <div class="mb-4">
+        <label
+          for="capacity"
+          class="block text-sm font-medium text-gray-700 mb-1"
+          >Capacity</label
+        >
+        <input
+          type="number"
+          id="capacity"
+          formControlName="capacity"
+          class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-200"
+          min="1"
+        />
+        <div
+          *ngIf="
+            busForm.get('capacity')?.touched && busForm.get('capacity')?.invalid
+          "
+          class="text-red-500 text-sm mt-1"
+        >
+          <div *ngIf="busForm.get('capacity')?.errors?.['required']">
+            Capacity is required
+          </div>
+          <div *ngIf="busForm.get('capacity')?.errors?.['min']">
+            Capacity must be greater than 0
+          </div>
+        </div>
+      </div>
+
+      <!-- Status Selection -->
+      <div class="mb-6">
+        <label for="status" class="block text-sm font-medium text-gray-700 mb-1"
+          >Status</label
+        >
+        <select
+          id="status"
+          formControlName="status"
+          class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-200"
+        >
+          <option value="">Select status</option>
+          <option value="Operating">Operating</option>
+          <option value="Not Operating">Not Operating</option>
+          <option value="Under Maintenance">Under Maintenance</option>
+        </select>
+        <div
+          *ngIf="
+            busForm.get('status')?.touched && busForm.get('status')?.invalid
+          "
+          class="text-red-500 text-sm mt-1"
+        >
+          Status is required
+        </div>
+      </div>
+
+      <!-- Form Actions -->
+      <div class="flex justify-end gap-3">
+        <button
+          type="button"
+          (click)="closeModal()"
+          class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+        >
+          Cancel
+        </button>
+        <button
+          type="submit"
+          [disabled]="busForm.invalid || submitting"
+          class="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:bg-blue-300"
+        >
+          {{ submitting ? "Adding..." : "Add Bus" }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+
+<!-- Schedule Modal Backdrop -->
+<div
+  *ngIf="showScheduleModal"
+  class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+>
+  <!-- Modal Content -->
+  <div class="bg-white rounded-lg shadow-xl w-full max-w-md mx-4">
+    <!-- Modal Header -->
+    <div class="px-6 py-4 border-b border-gray-200">
+      <div class="flex justify-between items-center">
+        <h3 class="text-xl font-semibold text-gray-800">Add Bus Schedule</h3>
+        <button
+          (click)="closeScheduleModal()"
+          class="text-gray-400 hover:text-gray-500"
+        >
+          <svg
+            class="h-6 w-6"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M6 18L18 6M6 6l12 12"
+            ></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Modal Body -->
+    <form [formGroup]="scheduleForm" (ngSubmit)="onScheduleSubmit()" class="px-6 py-4">
+      <!-- Route Selection -->
+      <div class="mb-4">
+        <label
+          for="routeId"
+          class="block text-sm font-medium text-gray-700 mb-1"
+          >Route</label
+        >
+        <select
+          id="routeId"
+          formControlName="routeId"
+          class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-200"
+        >
+          <option value="">Select a route</option>
+          <option *ngFor="let route of routes" [value]="route.id">
+            {{ route.name }}
+          </option>
+        </select>
+        <div
+          *ngIf="
+            scheduleForm.get('routeId')?.touched && scheduleForm.get('routeId')?.invalid
+          "
+          class="text-red-500 text-sm mt-1"
+        >
+          Route is required
+        </div>
+      </div>
+
+      <!-- Departure Time -->
+      <div class="mb-4">
+        <label
+          for="departureTime"
+          class="block text-sm font-medium text-gray-700 mb-1"
+          >Departure Time</label
+        >
+        <input
+          type="time"
+          id="departureTime"
+          formControlName="departureTime"
+          class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-200"
+        />
+        <div
+          *ngIf="
+            scheduleForm.get('departureTime')?.touched && scheduleForm.get('departureTime')?.invalid
+          "
+          class="text-red-500 text-sm mt-1"
+        >
+          Departure time is required
+        </div>
+      </div>
+
+      <!-- Arrival Time -->
+      <div class="mb-4">
+        <label
+          for="destinationArrivalTime"
+          class="block text-sm font-medium text-gray-700 mb-1"
+          >Arrival Time</label
+        >
+        <input
+          type="time"
+          id="destinationArrivalTime"
+          formControlName="destinationArrivalTime"
+          class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-200"
+        />
+        <div
+          *ngIf="
+            scheduleForm.get('destinationArrivalTime')?.touched && 
+            scheduleForm.get('destinationArrivalTime')?.invalid
+          "
+          class="text-red-500 text-sm mt-1"
+        >
+          Arrival time is required
+        </div>
+      </div>
+
+      <!-- Operating Status -->
+      <div class="mb-6">
+        <label
+          for="operatingStatus"
+          class="block text-sm font-medium text-gray-700 mb-1"
+          >Operating Status</label
+        >
+        <div class="flex items-center gap-2">
+          <input
+            type="checkbox"
+            id="operatingStatus"
+            formControlName="operatingStatus"
+            class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+          />
+          <span class="text-sm text-gray-600">Active</span>
+        </div>
+      </div>
+
+      <!-- Form Actions -->
+      <div class="flex justify-end gap-3">
+        <button
+          type="button"
+          (click)="closeScheduleModal()"
+          class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+        >
+          Cancel
+        </button>
+        <button
+          type="submit"
+          [disabled]="scheduleForm.invalid || submitting"
+          class="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:bg-blue-300"
+        >
+          {{ submitting ? "Adding..." : "Add Schedule" }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
