@@ -39,10 +39,12 @@
             "styles": [
               "src/styles.css",
               "node_modules/@fortawesome/fontawesome-free/css/all.min.css",
-              "node_modules/leaflet/dist/leaflet.css"
+              "node_modules/leaflet/dist/leaflet.css",
+              "node_modules/maplibre-gl/dist/maplibre-gl.css"
             ],
             "scripts": [
-              "/OlaMapsWebSDK/olamaps-js-sdk.umd.js"
+              "/OlaMapsWebSDK/olamaps-js-sdk.umd.js",
+              "/OlaMapsWebSDK/olamaps-js-sdk.es.js"
             ],
             "server": "src/main.server.ts",
             "prerender": false,

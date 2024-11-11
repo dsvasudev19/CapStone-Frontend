@@ -10,7 +10,7 @@ import { NotFoundComponent } from './not-found/not-found.component';
 import { DashboardModule } from './dashboard/dashboard.module';
 import { LucideAngularModule, File, Home, Menu, UserCheck,LayoutDashboard,UserCog,CarTaxiFront,TicketCheck,Bus, MessageCircleHeart,BadgeIndianRupee,Users,Settings2,Delete,Route } from 'lucide-angular';
 import { UserappModule } from './userapp/userapp.module';
-
+import { LocationModule } from './location/location.module';
 @NgModule({
   declarations: [
     AppComponent,
@@ -24,6 +24,7 @@ import { UserappModule } from './userapp/userapp.module';
     AuthModule,
     DashboardModule,
     UserappModule,
+    LocationModule,
     LucideAngularModule.pick({Delete, File, Home, Menu, UserCheck,LayoutDashboard,UserCog,CarTaxiFront,TicketCheck,Bus,MessageCircleHeart,BadgeIndianRupee,Users,Settings2,Route})
   ],
   providers: [

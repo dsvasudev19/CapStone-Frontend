@@ -23,13 +23,20 @@ import { HomeComponent as UserAppHomeComponent } from './userapp/home/home.compo
 import { CarpoolComponent as UserCarPoolComponent } from './userapp/carpool/carpool.component';
 import { BusSearchComponent } from './userapp/bus-search/bus-search.component';
 import { MapLocationComponent } from './location/map-location/map-location.component';
+import { LocationMapComponent } from './location/location-map/location-map.component';
+import { TestMapComponent } from './location/test-map/test-map.component';
+import { LoginComponent as UserLoginComponent } from './userapp/auth/login/login.component';
+import { RegisterComponent as UserRegisterComponent } from './userapp/auth/register/register.component';
+import { ForgotPasswordComponent as UserForgotPasswordComponent } from './userapp/auth/forgot-password/forgot-password.component';
+import { ResetPasswordComponent as UserResetPasswordComponent } from './userapp/auth/reset-password/reset-password.component';
+import { ProfileComponent } from './userapp/profile/profile.component';
 const routes: Routes = [
   {
     path: 'admin',
     component: MainLayoutComponent,
-    canActivate:[AuthGuard],
+    canActivate: [AuthGuard],
     children: [
-      { path: 'dashboard', component: HomeComponent ,},
+      { path: 'dashboard', component: HomeComponent },
       { path: 'users', component: UsersComponent },
       { path: 'operators', component: OperatorsComponent },
       { path: 'buses', component: BusComponent },
@@ -37,7 +44,7 @@ const routes: Routes = [
       { path: 'bookings', component: BookingsComponent },
       { path: 'payment', component: PaymentComponent },
       { path: 'feedbacks', component: FeedbackComponent },
-      { path: 'routes', component: RoutesComponent }
+      { path: 'routes', component: RoutesComponent },
     ],
   },
   {
@@ -48,16 +55,34 @@ const routes: Routes = [
       { path: 'register', component: RegisterComponent },
       { path: 'forgot-password', component: ForgotPasswordComponent },
       { path: 'reset-password', component: ResetPasswordComponent },
-      
     ],
   },
   {
-    path: '',
-    component: UserAppHomeComponent
+    path: 'user/auth',
+    component: AuthLayoutComponent,
+    children: [
+      { path: 'login', component: UserLoginComponent },
+      { path: 'register', component: UserRegisterComponent },
+      { path: 'forgot-password', component: UserForgotPasswordComponent },
+      { path: 'reset-password', component: UserResetPasswordComponent },
+    ],
   },
-  { path: 'carpool', component: UserCarPoolComponent},
-  { path:'bus-search',component:BusSearchComponent},
-  { path: 'location',component: MapLocationComponent},
+  {
+    path:'user',
+    children:[
+      {path:'profile',component:ProfileComponent}
+    ]
+
+  },
+  {
+    path: '',
+    component: UserAppHomeComponent,
+  },
+  { path: 'carpool', component: UserCarPoolComponent },
+  { path: 'bus-search', component: BusSearchComponent },
+  { path: 'location', component: MapLocationComponent },
+  { path: 'location2', component: LocationMapComponent },
+  { path: 'test-location', component: TestMapComponent },
   {
     path: '**',
     component: NotFoundComponent,
