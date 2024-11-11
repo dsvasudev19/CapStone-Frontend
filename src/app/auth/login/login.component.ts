@@ -30,6 +30,7 @@ export class LoginComponent implements OnInit{
     if(this.loginForm.valid){
       this.authService.login(data).subscribe({
         next:(data)=>{
+          console.log(data)
           localStorage.setItem("__auth",data.token)
           this.router.navigate(['/admin/dashboard'])
           console.log("Success")
