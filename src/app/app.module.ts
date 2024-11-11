@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { BrowserModule, provideClientHydration } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { GoogleMapsModule } from '@angular/google-maps';
 import { MainLayoutComponent } from './layouts/main-layout/main-layout.component';
 import { AuthLayoutComponent } from './layouts/auth-layout/auth-layout.component';
 import { provideHttpClient, withFetch } from '@angular/common/http';
@@ -25,7 +24,6 @@ import { UserappModule } from './userapp/userapp.module';
     AuthModule,
     DashboardModule,
     UserappModule,
-    GoogleMapsModule,
     LucideAngularModule.pick({Delete, File, Home, Menu, UserCheck,LayoutDashboard,UserCog,CarTaxiFront,TicketCheck,Bus,MessageCircleHeart,BadgeIndianRupee,Users,Settings2,Route})
   ],
   providers: [

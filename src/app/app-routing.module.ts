@@ -22,6 +22,7 @@ import { NotFoundComponent } from './not-found/not-found.component';
 import { HomeComponent as UserAppHomeComponent } from './userapp/home/home.component';
 import { CarpoolComponent as UserCarPoolComponent } from './userapp/carpool/carpool.component';
 import { BusSearchComponent } from './userapp/bus-search/bus-search.component';
+import { MapLocationComponent } from './location/map-location/map-location.component';
 const routes: Routes = [
   {
     path: 'admin',
@@ -56,6 +57,7 @@ const routes: Routes = [
   },
   { path: 'carpool', component: UserCarPoolComponent},
   { path:'bus-search',component:BusSearchComponent},
+  { path: 'location',component: MapLocationComponent},
   {
     path: '**',
     component: NotFoundComponent,

@@ -1,0 +1,33 @@
+.map-container {
+    width: 100%;
+    height: 100vh;
+    position: relative;
+  }
+  
+  /* Hide MapLibre logo and attribution */
+  .maplibregl-ctrl-bottom-right,
+  .maplibregl-ctrl-logo {
+    display: none !important;
+  }
+  
+  .custom-popup {
+    position: absolute;
+    background: white;
+    padding: 10px;
+    border-radius: 4px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    max-width: 200px;
+    z-index: 1000;
+  }
+  
+  .custom-popup h3 {
+    margin: 0 0 5px 0;
+    font-size: 16px;
+    color: #333;
+  }
+  
+  .custom-popup p {
+    margin: 0;
+    font-size: 14px;
+    color: #666;
+  }
