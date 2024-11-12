@@ -1,4 +1,10 @@
 <div class="w-full h-full">
+  <div *ngIf="showSuccessToast" class="absolute right-0 bg-green-100 border-t border-b border-green-500 text-green-700 px-4 py-1.5 rounded" role="alert">
+    <p class="text-sm">User operation completed successfully.</p>
+  </div>
+  <div *ngIf="showErrorToast" class="absolute right-0 bg-red-100 border-t border-b border-red-500 text-red-700 px-4 py-1.5 rounded" role="alert">
+    <p class="text-sm">User operation Failed</p>
+  </div>
     <div class="w-full flex justify-center">
       <section class="dark:bg-gray-900 w-full">
         <div

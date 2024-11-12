@@ -1,0 +1,131 @@
+<div class="main-wrapper overflow-hidden">
+    <!-- Header -->
+    <header class="bg-white/90 backdrop-blur-md shadow-lg py-4 sticky top-0 z-50">
+      <div class="container mx-auto flex justify-between items-center px-4">
+        <a href="/" class="text-4xl font-extrabold gradient-text logo-animation">Urban Transit</a>
+        
+        <nav class="hidden md:block">
+          <ul class="flex space-x-8 text-lg">
+            <li>
+              <a href="/bus-search" class="font-semibold text-gray-600 nav-link hover:text-red-800 transition duration-300 flex items-center space-x-1">
+                <span>Bus Search</span>
+                
+              </a>
+            </li>
+            <!-- <li>
+              <a href="/live-tracking" class="font-semibold text-gray-600 hover:text-red-600 transition duration-300">
+                Live Tracking
+              </a>
+            </li> -->
+            <li>
+              <a href="/bus-schedules" class="font-semibold text-red-600 nav-link hover:text-red-600 transition duration-300 flex items-center space-x-1">
+                <span>Schedules</span>
+                <div class="w-1 h-1 bg-red-600 rounded-full"></div>
+              </a>
+            </li>
+            <li>
+              <a href="/routes" class="font-semibold text-gray-600 nav-link hover:text-red-600 transition duration-300">
+                Routes
+              </a>
+            </li>
+            <li>
+              <ng-container *ngIf="isAuthenticated; else loginButton">
+                <button (click)="navigateToProfile()" class="m-1 hover:text-red-600 transition duration-300 flex items-center border-2 rounded-full">
+                  <!-- User Profile Icon - You can use any icon library or SVG -->
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                  </svg>
+                </button>
+              </ng-container>
+              <ng-template #loginButton>
+                <a href="/user/auth/login" class="nav-link hover:text-red-600 transition duration-300">Login</a>
+              </ng-template>
+            </li> 
+          </ul>
+        </nav>
+  
+        <button class="md:hidden p-2 rounded-lg hover:bg-red-50 transition duration-300">
+          <svg class="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"/>
+          </svg>
+        </button>
+      </div>
+    </header>
+  
+<div class="p-6 max-w-7xl mx-auto">
+    <h1 class="text-3xl font-bold mb-8 text-red-800">Bus Schedules</h1>
+    
+    <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+      <div *ngFor="let schedule of schedules" class="bg-white rounded-lg shadow-lg overflow-hidden border border-gray-200 hover:shadow-xl transition-shadow duration-300">
+        
+        <div class="bg-gradient-to-r from-red-500 to-red-700 p-4 text-white">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center space-x-2">
+                <lucide-icon name="bus" class="text-xl opacity-90"></lucide-icon>
+              <span class="font-semibold">Bus #{{schedule.bus.routeId}}</span>
+            </div>
+            <span [class]="'px-3 py-1 rounded-full text-sm ' + 
+              (schedule.operatingStatus ? 'bg-green-500' : 'bg-red-900')">
+              {{schedule.operatingStatus ? 'Operating' : 'Not Operating'}}
+            </span>
+          </div>
+        </div>
+  
+        <div class="p-4 border-b border-gray-200 bg-red-50">
+          <div class="flex items-center space-x-2 text-red-700 mb-2">
+            <lucide-icon name="route" class="text-xl opacity-90"></lucide-icon>
+            <h2 class="font-semibold">{{schedule.bus.route.name}}</h2>
+          </div>
+          <div class="flex items-center justify-between text-sm text-gray-700">
+            <div class="flex items-center space-x-1">
+                <lucide-icon name="map-pin" class="text-xl opacity-90"></lucide-icon>
+              <span>{{schedule.bus.route.origin}}</span>
+            </div>
+            <span class="text-red-600">→</span>
+            <div class="flex items-center space-x-1">
+                <lucide-icon name="map-pin" class="text-xl opacity-90"></lucide-icon>
+              <span>{{schedule.bus.route.destination}}</span>
+            </div>
+          </div>
+        </div>
+        <div class="p-4 space-y-3">
+          <div class="flex justify-between items-center">
+            <div class="flex items-center space-x-2 text-gray-700">
+                <lucide-icon name="clock" class="text-xl opacity-90"></lucide-icon>
+              <span>Departure</span>
+            </div>
+            <span class="font-semibold text-red-700">{{schedule.departureTime}}</span>
+          </div>
+          <div class="flex justify-between items-center">
+            <div class="flex items-center space-x-2 text-gray-700">
+                <lucide-icon name="clock" class="text-xl opacity-90"></lucide-icon>
+              <span>Arrival</span>
+            </div>
+            <span class="font-semibold text-red-700">{{schedule.destinationArrivalTime}}</span>
+          </div>
+        </div>
+  
+        <div class="p-4 bg-red-50 border-t border-gray-200">
+          <h3 class="font-semibold text-red-700 mb-2">Stops</h3>
+          <div class="space-y-2">
+            <div *ngFor="let stop of schedule.bus.route.stops" class="flex items-center justify-between text-sm">
+              <div class="flex items-center space-x-2">
+                <div class="w-2 h-2 rounded-full bg-red-600"></div>
+                <span class="text-gray-700">{{stop.name}}</span>
+              </div>
+              <span class="text-red-600">{{stop.time}}</span>
+            </div>
+          </div>
+        </div>
+  
+        <div class="p-4 border-t border-gray-200">
+          <div class="flex items-center justify-between text-sm">
+            <span class="text-gray-600">Capacity</span>
+            <span class="font-semibold text-red-600">{{schedule.bus.capacity}} seats</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

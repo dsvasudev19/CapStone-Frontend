@@ -30,11 +30,14 @@ import { RegisterComponent as UserRegisterComponent } from './userapp/auth/regis
 import { ForgotPasswordComponent as UserForgotPasswordComponent } from './userapp/auth/forgot-password/forgot-password.component';
 import { ResetPasswordComponent as UserResetPasswordComponent } from './userapp/auth/reset-password/reset-password.component';
 import { ProfileComponent } from './userapp/profile/profile.component';
+import { adminAuthGuard } from './guards/admin-auth.guard';
+import { UserGaurd } from './guards/user.guard';
+import { BusScheduleComponent } from './userapp/bus-schedule/bus-schedule.component';
 const routes: Routes = [
   {
     path: 'admin',
     component: MainLayoutComponent,
-    canActivate: [AuthGuard],
+    canActivate: [adminAuthGuard],
     children: [
       { path: 'dashboard', component: HomeComponent },
       { path: 'users', component: UsersComponent },
@@ -70,7 +73,7 @@ const routes: Routes = [
   {
     path:'user',
     children:[
-      {path:'profile',component:ProfileComponent}
+      {path:'profile',component:ProfileComponent,canActivate:[UserGaurd]}
     ]
 
   },
@@ -83,6 +86,7 @@ const routes: Routes = [
   { path: 'location', component: MapLocationComponent },
   { path: 'location2', component: LocationMapComponent },
   { path: 'test-location', component: TestMapComponent },
+  { path:'bus-schedules',component:BusScheduleComponent},
   {
     path: '**',
     component: NotFoundComponent,

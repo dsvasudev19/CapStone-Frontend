@@ -9,6 +9,8 @@ import { RegisterComponent } from './auth/register/register.component';
 import { ForgotPasswordComponent } from './auth/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './auth/reset-password/reset-password.component';
 import { ProfileComponent } from './profile/profile.component';
+import { BusScheduleComponent } from './bus-schedule/bus-schedule.component';
+import { LucideAngularModule ,Home,MapPin ,Clock } from 'lucide-angular';
 
 @NgModule({
   declarations: [
@@ -19,12 +21,15 @@ import { ProfileComponent } from './profile/profile.component';
     RegisterComponent,
     ForgotPasswordComponent,
     ResetPasswordComponent,
-    ProfileComponent
+    ProfileComponent,
+    BusScheduleComponent,
+    
   ],
   imports: [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
+    LucideAngularModule.pick({Home,MapPin,Clock  })
     
   ]
 })

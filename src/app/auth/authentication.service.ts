@@ -36,10 +36,14 @@ export class AuthenticationService {
     return this.http.post<any>(this.apiUrl + '/auth//user/register', data,{headers:this.headers});
   } 
 
+  registerNewUser(data:any):Observable<any>{
+    return this.http.post<any>(this.apiUrl+"/users",data)
+  }
+
   checkAuthentication():Observable<any>{
     if (isPlatformBrowser(this.platformId)) {
       let storedToken=localStorage.getItem("__auth");
-      return this.http.get<any>(this.apiUrl+"/auth/validate/token?token="+storedToken,{headers:this.headers})
+      return this.http.get<any>(this.apiUrl+"/auth/admin/validate/token?token="+storedToken,{headers:this.headers})
     }
     
     return of({ authenticated: false });
@@ -55,5 +59,22 @@ export class AuthenticationService {
 
   resetPassword(token:any,data:any):Observable<any>{
     return this.http.post<any>(this.apiUrl+"/auth/reset/password?token="+token,data)
+  }
+
+  getUserByToken(token:string):Observable<any>{
+    return this.http.get<any>(this.apiUrl+`/auth/user/token/${token}`)
+  }
+
+  checkUserAuthentication():Observable<any>{
+    if (isPlatformBrowser(this.platformId)) {
+      let storedToken=localStorage.getItem("auth");
+      return this.http.get<any>(this.apiUrl+"/auth/validate/token?token="+storedToken,{headers:this.headers})
+    }
+    
+    return of({ authenticated: false });
+  }
+
+  changePassword(email:string,data:any):Observable<any>{
+    return this.http.put(this.apiUrl+`/auth/change-password/${email}`,data);
   }
 }

@@ -1,131 +1,413 @@
-<div class="bg-gray-200 font-sans h-screen flex justify-center items-center">
-    <div class="w-4/5 space-y-6">
-      <div class="flex justify-between items-center">
-        <h1 class="text-3xl font-bold text-gray-800">
-          <span class="text-red-600 mr-2">👤</span>
-          User Dashboard
-        </h1>
-        <button class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50">
-          <span class="mr-2">⚙️</span>
-          Update Profile
+<div class="bg-gray-200 min-h-screen p-8">
+  <div class="max-w-7xl mx-auto space-y-6">
+    <!-- Header -->
+    <div class="flex justify-between items-center">
+      <h1 class="text-3xl font-bold text-gray-800">
+        <span class="text-red-600 mr-2">👤</span>
+        User Dashboard
+      </h1>
+      <div class="space-x-4">
+        <button
+          (click)="toggleCarpoolModal()"
+          class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50"
+        >
+          <span class="mr-2">🚗</span>
+          Add Carpool Service
         </button>
       </div>
-  
-      <div class="flex justify-between space-x-6">
-        <div class="bg-white rounded-lg shadow-lg p-6 flex-1">
-          <h2 class="text-xl font-bold mb-4 flex items-center text-gray-800">
-            <span class="text-red-600 mr-2">👤</span>
-            Profile
-          </h2>
-          <div class="mb-4">
-            <label for="name" class="block text-gray-700 font-bold mb-2">Name</label>
-            <input type="text" id="name" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50" placeholder="Enter your name" />
+    </div>
+
+    <!-- Stats Banner -->
+    <div class="bg-red-50 border border-red-200 rounded-lg p-4 text-red-800">
+      <div class="flex justify-between items-center">
+        <div class="text-sm">
+          Based on your eco-friendly transit choices:
+          <span class="font-bold"
+            >You've helped save {{ carbonSaved }} kg of CO2 emissions!</span
+          >
+        </div>
+        <span class="text-2xl">🌍</span>
+      </div>
+    </div>
+
+    <!-- Main Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <!-- Profile Section -->
+      <!-- <div class="bg-white rounded-lg shadow-lg p-6">
+        <h2 class="text-xl font-bold mb-4 flex items-center text-gray-800">
+          <span class="text-red-600 mr-2">👤</span>
+          Profile
+        </h2>
+        <div class="space-y-4">
+          <div>
+            <label class="block text-gray-700 font-bold mb-2">Name</label>
+            <input type="text" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50">
           </div>
-          <div class="mb-4">
-            <label for="email" class="block text-gray-700 font-bold mb-2">Email</label>
-            <input type="email" id="email" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50" placeholder="Enter your email" />
+          <div>
+            <label class="block text-gray-700 font-bold mb-2">Email</label>
+            <input type="email" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50">
           </div>
-          <div class="mb-4">
-            <label for="phone" class="block text-gray-700 font-bold mb-2">Phone</label>
-            <input type="tel" id="phone" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50" placeholder="Enter your phone number" />
-          </div>
-          <div class="mb-4">
-            <label for="role" class="block text-gray-700 font-bold mb-2">Role</label>
-            <input type="text" id="role" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50" placeholder="Enter your role" />
+          <div>
+            <label class="block text-gray-700 font-bold mb-2">Phone</label>
+            <input type="tel" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50">
           </div>
         </div>
-  
-        <div class="bg-white rounded-lg shadow-lg p-6 flex-1">
-          <h2 class="text-xl font-bold mb-4 flex items-center text-gray-800">
-            <span class="text-red-600 mr-2">💬</span>
-            Feedback
-          </h2>
-          <ul class="space-y-4">
-            <li>
-              <div class="bg-gray-100 rounded-lg p-4">
-                <p class="text-gray-700">This is some sample feedback from a user.</p>
-                <p class="text-gray-500 text-sm">2 days ago</p>
+      </div> -->
+
+      <!-- Profile Section -->
+      <div class="bg-white rounded-lg shadow-lg p-6">
+        <h2 class="text-xl font-bold mb-4 flex items-center text-gray-800">
+          <span class="text-red-600 mr-2">👤</span>
+          Profile
+        </h2>
+        <div class="space-y-4">
+          <!-- Profile Content -->
+          <div class="flex justify-end space-x-3 mb-4">
+            <button
+              (click)="setEditMode()"
+              class="bg-red-600 hover:bg-red-700 text-white text-sm px-4 py-2 rounded-md flex items-center"
+              *ngIf="!isEditing"
+            >
+              <span class="mr-2">✏️</span>
+              Edit Profile
+            </button>
+            <button
+              (click)="openPasswordModal()"
+              class="bg-gray-600 hover:bg-gray-700 text-white text-sm px-4 py-2 rounded-md flex items-center"
+            >
+              <span class="mr-2">🔒</span>
+              Change Password
+            </button>
+          </div>
+
+          <!-- Profile Fields -->
+          <div class="space-y-4">
+            <div class="flex items-center space-x-3">
+              <span class="text-red-600">👤</span>
+              <div class="flex-grow">
+                <label class="block text-gray-700 font-bold mb-1">Name</label>
+                <input
+                  *ngIf="isEditing"
+                  type="text"
+                  [(ngModel)]="userData.name"
+                  class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50"
+                />
+                <p *ngIf="!isEditing" 
+                class="py-2.5 px-4 bg-gray-50 border border-gray-200 rounded-md text-gray-700 font-medium leading-relaxed flex items-center min-h-[40px] hover:bg-gray-100 transition-colors duration-200">
+               {{userData.name}}
+             </p>
               </div>
-            </li>
-            <li>
-              <div class="bg-gray-100 rounded-lg p-4">
-                <p class="text-gray-700">The app is working great, thanks for the update!</p>
-                <p class="text-gray-500 text-sm">1 week ago</p>
+            </div>
+
+            <div class="flex items-center space-x-3">
+              <span class="text-red-600">📧</span>
+              <div class="flex-grow">
+                <label class="block text-gray-700 font-bold mb-1">Email</label>
+                <input
+                  *ngIf="isEditing"
+                  type="email"
+                  disabled
+                  [(ngModel)]="userData.email"
+                  class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50"
+                />
+                <p *ngIf="!isEditing" 
+             class="py-2.5 px-4 bg-gray-50 border border-gray-200 rounded-md text-gray-700 font-medium leading-relaxed flex items-center min-h-[40px] hover:bg-gray-100 transition-colors duration-200">
+            {{userData.email}}
+          </p>
               </div>
-            </li>
-          </ul>
-        </div>
-  
-        <div class="bg-white rounded-lg shadow-lg p-6 flex-1">
-          <h2 class="text-xl font-bold mb-4 flex items-center text-gray-800">
-            <span class="text-red-600 mr-2">📅</span>
-            Reservations
-          </h2>
-          <ul class="space-y-4">
-            <li>
-              <div class="bg-gray-100 rounded-lg p-4">
-                <p class="text-gray-700">Carpool on May 5th from Downtown to Uptown</p>
-                <p class="text-gray-500 text-sm">2 days ago</p>
+            </div>
+
+            <div class="flex items-center space-x-3">
+              <span class="text-red-600">📱</span>
+              <div class="flex-grow">
+                <label class="block text-gray-700 font-bold mb-1">Phone</label>
+                <input
+                  *ngIf="isEditing"
+                  type="tel"
+                  [(ngModel)]="userData.phone"
+                  class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50"
+                />
+                <p *ngIf="!isEditing" 
+                class="py-2.5 px-4 bg-gray-50 border border-gray-200 rounded-md text-gray-700 font-medium leading-relaxed flex items-center min-h-[40px] hover:bg-gray-100 transition-colors duration-200">
+               {{userData.phone}}
+             </p>
               </div>
-            </li>
-            <li>
-              <div class="bg-gray-100 rounded-lg p-4">
-                <p class="text-gray-700">Bus trip on April 15th from West to East</p>
-                <p class="text-gray-500 text-sm">1 week ago</p>
-              </div>
-            </li>
-          </ul>
+            </div>
+
+            <!-- Save Button (Only shown in edit mode) -->
+            <div class="flex justify-end" *ngIf="isEditing">
+              <button
+                (click)="saveProfile()"
+                class="bg-red-600 hover:bg-red-700 text-white text-sm px-4 py-2 rounded-md flex items-center"
+              >
+                <span class="mr-2">💾</span>
+                Save Changes
+              </button>
+            </div>
+          </div>
         </div>
       </div>
-  
-      <div class="flex justify-between space-x-6">
-        <div class="bg-white rounded-lg shadow-lg p-6 flex-1">
-          <h2 class="text-xl font-bold mb-4 flex items-center text-gray-800">
-            <span class="text-red-600 mr-2">📊</span>
-            Usage Statistics
-          </h2>
-          <div class="flex justify-between">
-            <div class="text-center">
-              <h3 class="text-2xl font-bold text-red-600">120</h3>
-              <p class="text-gray-500">Bus Trips</p>
-            </div>
-            <div class="text-center">
-              <h3 class="text-2xl font-bold text-red-600">35</h3>
-              <p class="text-gray-500">Carpool Reservations</p>
-            </div>
-            <div class="text-center">
-              <h3 class="text-2xl font-bold text-red-600">24</h3>
-              <p class="text-gray-500">Feedback Submitted</p>
-            </div>
+
+      <!-- Password Change Modal -->
+      <div
+        *ngIf="showPasswordModal"
+        class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full"
+      >
+        <div
+          class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white"
+        >
+          <div class="mt-3">
+            <h3 class="text-lg font-bold text-gray-800 mb-4 flex items-center">
+              <span class="text-red-600 mr-2">🔒</span>
+              Change Password
+            </h3>
+            <form (ngSubmit)="changePassword()" class="space-y-4">
+              <div>
+                <label class="block text-gray-700 font-bold mb-2"
+                  >Current Password</label
+                >
+                <input
+                  type="password"
+                  [(ngModel)]="passwordData.currentPassword"
+                  name="currentPassword"
+                  class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50"
+                  required
+                />
+              </div>
+              <div>
+                <label class="block text-gray-700 font-bold mb-2"
+                  >New Password</label
+                >
+                <input
+                  type="password"
+                  [(ngModel)]="passwordData.newPassword"
+                  name="newPassword"
+                  class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50"
+                  required
+                />
+              </div>
+              <div>
+                <label class="block text-gray-700 font-bold mb-2"
+                  >Confirm New Password</label
+                >
+                <input
+                  type="password"
+                  [(ngModel)]="passwordData.confirmPassword"
+                  name="confirmPassword"
+                  class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50"
+                  required
+                />
+              </div>
+              <div class="flex justify-end space-x-4 mt-6">
+                <button
+                  type="button"
+                  (click)="closePasswordModal()"
+                  class="px-4 py-2 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-300"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  class="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500"
+                >
+                  Change Password
+                </button>
+              </div>
+            </form>
           </div>
         </div>
-  
-        <div class="bg-white rounded-lg shadow-lg p-6 flex-1">
-          <h2 class="text-xl font-bold mb-4 flex items-center text-gray-800">
-            <span class="text-red-600 mr-2">📩</span>
-            Notifications
-          </h2>
-          <ul class="space-y-4">
-            <li>
-              <div class="bg-gray-100 rounded-lg p-4">
-                <p class="text-gray-700">Your carpool reservation for May 5th has been confirmed.</p>
-                <p class="text-gray-500 text-sm">2 days ago</p>
-              </div>
-            </li>
-            <li>
-              <div class="bg-gray-100 rounded-lg p-4">
-                <p class="text-gray-700">New bus schedule for Route 42 is now available.</p>
-                <p class="text-gray-500 text-sm">1 week ago</p>
-              </div>
-            </li>
-            <li>
-              <div class="bg-gray-101 rounded-lg p-4">
-                <p class="text-gray-700">Your feedback has been submitted successfully.</p>
-                <p class="text-gray-500 text-sm">2 weeks ago</p>
-              </div>
-            </li>
-          </ul>
+      </div>
+      <!-- Usage Statistics -->
+      <div class="bg-white rounded-lg shadow-lg p-6">
+        <h2 class="text-xl font-bold mb-4 flex items-center text-gray-800">
+          <span class="text-red-600 mr-2">📊</span>
+          Transit Usage
+        </h2>
+        <canvas id="usageChart" width="400" height="300"></canvas>
+      </div>
+
+      <!-- Quick Stats -->
+      <div class="bg-white rounded-lg shadow-lg p-6">
+        <h2 class="text-xl font-bold mb-4 flex items-center text-gray-800">
+          <span class="text-red-600 mr-2">📈</span>
+          Statistics
+        </h2>
+        <div class="grid grid-cols-2 gap-4">
+          <div class="text-center p-4 bg-red-50 rounded-lg">
+            <div class="text-2xl font-bold text-red-600">
+              {{ totalBusTrips }}
+            </div>
+            <div class="text-sm text-gray-600">Bus Trips</div>
+          </div>
+          <div class="text-center p-4 bg-red-50 rounded-lg">
+            <div class="text-2xl font-bold text-red-600">
+              {{ totalCarpools }}
+            </div>
+            <div class="text-sm text-gray-600">Carpools</div>
+          </div>
+          <div class="text-center p-4 bg-red-50 rounded-lg">
+            <div class="text-2xl font-bold text-red-600">{{ carbonSaved }}</div>
+            <div class="text-sm text-gray-600">kg CO2 Saved</div>
+          </div>
+          <div class="text-center p-4 bg-red-50 rounded-lg">
+            <div class="text-2xl font-bold text-red-600">
+              {{ totalFeedback }}
+            </div>
+            <div class="text-sm text-gray-600">Feedback</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Recent Activity -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <!-- Reservations -->
+      <div class="bg-white rounded-lg shadow-lg p-6">
+        <h2 class="text-xl font-bold mb-4 flex items-center text-gray-800">
+          <span class="text-red-600 mr-2">📅</span>
+          Recent Reservations
+        </h2>
+        <div class="space-y-4">
+          <div
+            *ngFor="let reservation of recentReservations"
+            class="bg-gray-50 rounded-lg p-4"
+          >
+            <p class="text-gray-800">
+              {{ reservation.type }}: {{ reservation.route }}
+            </p>
+            <p class="text-sm text-gray-500">{{ reservation.time }}</p>
+            <span
+              class="inline-block px-2 py-1 text-xs font-semibold rounded-full"
+              [ngClass]="reservation.statusClass"
+            >
+              {{ reservation.status }}
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Notifications -->
+      <div class="bg-white rounded-lg shadow-lg p-6">
+        <h2 class="text-xl font-bold mb-4 flex items-center text-gray-800">
+          <span class="text-red-600 mr-2">📩</span>
+          Notifications
+        </h2>
+        <div class="space-y-4">
+          <div
+            *ngFor="let notification of notifications"
+            class="bg-gray-50 rounded-lg p-4"
+          >
+            <p class="text-gray-800">{{ notification.message }}</p>
+            <p class="text-sm text-gray-500">{{ notification.time }}</p>
+          </div>
         </div>
       </div>
     </div>
   </div>
+
+  <!-- Carpool Modal -->
+  <div
+  *ngIf="showCarpoolModal"
+  class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full max-full"
+  >
+  <div
+    class="relative top-20 mx-auto p-5 border shadow-lg rounded-md bg-white max-w-2xl"
+  >
+    <div class="mt-3">
+      <h3 class="text-lg font-bold text-gray-800 mb-4 flex items-center">
+        <span class="text-red-600 mr-2">🚗</span>
+        Add Carpool Service
+      </h3>
+      <form (ngSubmit)="submitCarpoolService()" class="space-y-4">
+        <div class="flex gap-3">
+          <div class="w-full">
+            <label class="block text-gray-700 font-bold mb-2">Route</label>
+            <div class="relative">
+              <select
+                [(ngModel)]="newCarpoolService.routeId"
+                name="routeId"
+                required
+                class="appearance-none bg-white border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50 pr-8"
+              >
+                <option value="" disabled selected>Select a route</option>
+                <option *ngFor="let route of routes" [value]="route.id">
+                  {{ route.id }} ({{ route.origin }} → {{ route.destination }})
+                </option>
+              </select>
+              <!-- Custom dropdown arrow -->
+              <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                  <path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"/>
+                </svg>
+              </div>
+            </div>
+          </div>
+          <div class="w-full">
+            <label class="block text-gray-700 font-bold mb-2">Capacity</label>
+            <input
+              type="number"
+              [(ngModel)]="newCarpoolService.capacity"
+              name="capacity"
+              class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50"
+              required
+            />
+          </div>
+        </div>
+        <div class="flex gap-3">
+          <div class="w-full">
+            <label class="block text-gray-700 font-bold mb-2"
+              >Available Seats</label
+            >
+            <input
+              type="number"
+              [(ngModel)]="newCarpoolService.availableSeats"
+              name="availableSeats"
+              class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50"
+              required
+            />
+          </div>
+          <div class="w-full">
+            <label class="block text-gray-700 font-bold mb-2"
+              >Departure Time</label
+            >
+            <input
+              type="time"
+              [(ngModel)]="newCarpoolService.departureTime"
+              name="departureTime"
+              class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50"
+              required
+            />
+          </div>
+        </div>
+        <div>
+          <label class="block text-gray-700 font-bold mb-2"
+            >Pickup Location</label
+          >
+          <input
+            type="text"
+            [(ngModel)]="newCarpoolService.pickupLocation"
+            name="pickupLocation"
+            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50"
+            required
+          />
+        </div>
+        <div class="flex justify-end space-x-4 mt-6">
+          <button
+            type="button"
+            (click)="toggleCarpoolModal()"
+            class="px-4 py-2 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-300"
+          >
+            Cancel
+          </button>
+          <button
+            type="submit"
+            class="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500"
+          >
+            Add Service
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+  </div>
+</div>

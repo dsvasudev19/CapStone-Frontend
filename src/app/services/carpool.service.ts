@@ -18,4 +18,14 @@ export class CarpoolService {
   deleteCarPoolService(id:number):Observable<any>{
     return this.http.delete(this.apiUrl+`/${id}`)
   }
+
+  reserveASeatInCarPool(carPoolId:number, userId:number):Observable<any>{
+    return this.http.post<any>(this.apiUrl+`/${carPoolId}/users/${userId}`,{})
+  }
+
+  addNewCarPoolService(data:any):Observable<any>{
+    return this.http.post<any>(this.apiUrl,data)
+  }
+
+
 }

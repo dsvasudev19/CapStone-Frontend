@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-bus-search',
@@ -12,8 +13,9 @@ export class BusSearchComponent {
   availableBuses: any[] = [];
   selectedBus: any | null = null;
   showMap = false;
+  isAuthenticated:boolean = false;
   
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder,private router:Router) {
     this.searchForm = this.fb.group({
       source: ['', Validators.required],
       destination: ['', Validators.required],
@@ -64,7 +66,12 @@ export class BusSearchComponent {
     ];
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    let isLoggedIn=sessionStorage.getItem("isAuthentication")
+    if(isLoggedIn!==null && isLoggedIn){
+      this.isAuthenticated=true;
+    }
+  }
 
   onSearch(): void {
     // Implement search logic
@@ -97,6 +104,10 @@ export class BusSearchComponent {
   backToList(): void {
     this.selectedBus = null;
     this.showMap = false;
+  }
+
+  navigateToProfile(){
+    this.router.navigate(['/user/profile'])
   }
 
 }

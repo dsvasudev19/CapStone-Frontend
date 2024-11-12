@@ -13,6 +13,10 @@ export class LoginComponent implements OnInit{
 
   loginForm:FormGroup=new FormGroup({})
   isSubmitting:boolean=false;
+  showErrorToast:boolean = false;
+  showSuccessToast:boolean = false;
+  successMessage:string="";
+  errorMessage:string="";
 
   constructor(private formBuilder:FormBuilder,
     private authService:AuthenticationService,private router:Router){}
@@ -32,11 +36,27 @@ export class LoginComponent implements OnInit{
         next:(data)=>{
           console.log(data)
           localStorage.setItem("__auth",data.token)
-          this.router.navigate(['/admin/dashboard'])
           console.log("Success")
+          if(data.role === "USER"){
+            this.showErrorToast=true;
+            this.errorMessage="You are Not Authorized to access this resources."
+            setTimeout(()=>{
+              localStorage.setItem("auth",data.token)
+              this.router.navigate(['/user/profile'])
+            },1500)
+          }
+          this.router.navigate(['/admin/dashboard'])
         },
         error:(error)=>{
           console.log(error)
+          this.showErrorToast=true;
+          this.errorMessage=error.message
+        },
+        complete:()=>{
+          setTimeout(()=>{
+            this.showErrorToast=false;
+            this.showSuccessToast=false;
+          },1500)
         }
       })
     }

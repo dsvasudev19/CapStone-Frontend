@@ -32,5 +32,8 @@ export class RouteService {
     return this.http.post(this.apiUrl+`/stations/${routeId}`,data)
   }
 
+  findRouteBasedOnSourceAndDestination(source:string,destination:string):Observable<any>{
+    return this.http.get<any>(this.apiUrl+`/find?source=${source}&destination=${destination}`)
+  }
 
 }
