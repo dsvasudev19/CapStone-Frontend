@@ -11,12 +11,15 @@ import { DashboardModule } from './dashboard/dashboard.module';
 import { LucideAngularModule, File, Home, Menu, UserCheck,LayoutDashboard,UserCog,CarTaxiFront,TicketCheck,Bus, MessageCircleHeart,BadgeIndianRupee,Users,Settings2,Delete,Route } from 'lucide-angular';
 import { UserappModule } from './userapp/userapp.module';
 import { LocationModule } from './location/location.module';
+import { BusTrackerComponent } from './operator-interface/bus-tracker/bus-tracker.component';
+import { FormsModule ,ReactiveFormsModule} from '@angular/forms';
 @NgModule({
   declarations: [
     AppComponent,
     MainLayoutComponent,
     AuthLayoutComponent,
     NotFoundComponent,
+    BusTrackerComponent,
   ],
   imports: [
     BrowserModule,
@@ -25,6 +28,8 @@ import { LocationModule } from './location/location.module';
     DashboardModule,
     UserappModule,
     LocationModule,
+    FormsModule,
+    ReactiveFormsModule,
     LucideAngularModule.pick({Delete, File, Home, Menu, UserCheck,LayoutDashboard,UserCog,CarTaxiFront,TicketCheck,Bus,MessageCircleHeart,BadgeIndianRupee,Users,Settings2,Route})
   ],
   providers: [

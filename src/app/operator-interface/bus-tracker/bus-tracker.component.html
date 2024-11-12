@@ -1,0 +1,62 @@
+<div class="main-wrapper overflow-hidden">
+    <div class="bg-gradient-to-b from-red-50 to-white min-h-screen flex flex-col">
+      <!-- Header -->
+      <header class="bg-white/90 backdrop-blur-md shadow-lg py-4 sticky top-0 z-50">
+        <div class="container mx-auto flex justify-between items-center px-4">
+          <a href="/" class="text-4xl font-extrabold gradient-text logo-animation">Urban Transit</a>
+          <nav class="hidden md:block">
+            <ul class="flex space-x-8 text-lg text-gray-700">
+              <li><a href="/" class="nav-link text-red-600 transition duration-300">Home</a></li>
+              <li><a href="/bus-search" class="nav-link hover:text-red-600 transition duration-300">Bus Search</a></li>
+              <li><a href="/carpool" class="nav-link hover:text-red-600 transition duration-300">Carpool</a></li>
+              <li>
+                <ng-container *ngIf="isLoggedIn; else loginButton">
+                  <button (click)="navigateToProfile()" class="m-1 hover:text-red-600 transition duration-300 flex items-center border-2 rounded-full">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                    </svg>
+                  </button>
+                </ng-container>
+                <ng-template #loginButton>
+                  <a href="/user/auth/login" class="nav-link hover:text-red-600 transition duration-300">Login</a>
+                </ng-template>
+              </li>
+            </ul>
+          </nav>
+          <button class="md:hidden mobile-menu-button">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+            </svg>
+          </button>
+        </div>
+      </header>
+  
+      <!-- Main Content -->
+      <main class="container mx-auto px-4 py-8 flex-grow">
+          <div class="bus-selector flex items-center justify-between">
+            <div class="">
+              <label for="bus-number" class="text-gray-700 font-medium me-3">Select Bus Number:</label>
+              <select id="bus-number" [(ngModel)]="selectedBusNumber" class="bg-red-50 text-gray-700 px-4 py-2 rounded-md border-none focus:ring-2 focus:ring-red-500 focus:outline-none">
+                <option *ngFor="let bus of buses" [value]="bus.id">{{ bus.id }}</option>
+              </select>
+            </div>
+            <button (click)="startJourney()" class="bg-red-600 hover:bg-red-700 text-white px-6 py-2 rounded-md transition duration-300 ms-5">
+              Start Journey
+            </button>
+      
+        </div>
+  
+        <div class="bus-location">
+            <h2 class="text-2xl font-bold text-red-600 mb-4">Current Bus Location</h2>
+            <div class="space-y-2">
+              <p class="text-gray-700">Latitude: <span class="font-bold">{{ latitude }}</span></p>
+              <p class="text-gray-700">Longitude: <span class="font-bold">{{ longitude }}</span></p>
+              <p class="text-gray-700">Occupancy: <span class="font-bold text-red-600">{{ occupancy }}%</span></p>
+            </div>
+          </div>
+          <div *ngIf="latitude>0" class="m-5">
+              <app-location-map [latitude]="latitude" [longitude]="longitude"></app-location-map>
+          </div>
+      </main>
+    </div>
+  </div>

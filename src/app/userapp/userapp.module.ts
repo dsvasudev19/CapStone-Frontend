@@ -10,8 +10,8 @@ import { ForgotPasswordComponent } from './auth/forgot-password/forgot-password.
 import { ResetPasswordComponent } from './auth/reset-password/reset-password.component';
 import { ProfileComponent } from './profile/profile.component';
 import { BusScheduleComponent } from './bus-schedule/bus-schedule.component';
-import { LucideAngularModule ,Home,MapPin ,Clock } from 'lucide-angular';
-
+import { LucideAngularModule ,Home,MapPin ,Clock,ChevronDown,ChevronUp,Map,MapPinned   } from 'lucide-angular';
+import { LocationModule } from '../location/location.module';
 @NgModule({
   declarations: [
     HomeComponent,
@@ -29,7 +29,8 @@ import { LucideAngularModule ,Home,MapPin ,Clock } from 'lucide-angular';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    LucideAngularModule.pick({Home,MapPin,Clock  })
+    LocationModule,
+    LucideAngularModule.pick({Home,MapPin,Clock,ChevronDown,ChevronUp,Map,MapPinned    })
     
   ]
 })

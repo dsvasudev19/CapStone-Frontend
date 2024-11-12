@@ -74,7 +74,7 @@ export class ProfileComponent implements OnInit {
     }
   ];
 
-  notifications: Notification[] = [
+  notifications: any[] = [
     {
       message: 'Your carpool reservation has been confirmed.',
       time: '2 hours ago'

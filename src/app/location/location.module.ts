@@ -14,6 +14,11 @@ import { TestMapComponent } from './test-map/test-map.component';
   ],
   imports: [
     CommonModule
+  ],
+  exports:[
+    MapLocationComponent,
+    LocationMapComponent,
+    TestMapComponent
   ]
 })
 export class LocationModule { }

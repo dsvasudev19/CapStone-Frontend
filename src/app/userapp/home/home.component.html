@@ -6,10 +6,9 @@
           <a href="/" class="text-4xl font-extrabold gradient-text logo-animation">Urban Transit</a>
           <nav class="hidden md:block">
             <ul class="flex space-x-8 text-lg text-gray-700">
+              <li><a href="/" class="nav-link text-red-600 transition duration-300">Home</a></li>
               <li><a href="/bus-search" class="nav-link hover:text-red-600 transition duration-300">Bus Search</a></li>
               <li><a href="/carpool" class="nav-link hover:text-red-600 transition duration-300">Carpool</a></li>
-              <li><a href="/feedback" class="nav-link hover:text-red-600 transition duration-300">Feedback</a></li>
-              <li><a href="/bus-tracking" class="nav-link hover:text-red-600 transition duration-300">Bus Tracking</a></li>
               <li>
                 <ng-container *ngIf="isLoggedIn; else loginButton">
                   <button (click)="navigateToProfile()" class="m-1 hover:text-red-600 transition duration-300 flex items-center border-2 rounded-full">

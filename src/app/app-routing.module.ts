@@ -33,6 +33,7 @@ import { ProfileComponent } from './userapp/profile/profile.component';
 import { adminAuthGuard } from './guards/admin-auth.guard';
 import { UserGaurd } from './guards/user.guard';
 import { BusScheduleComponent } from './userapp/bus-schedule/bus-schedule.component';
+import { BusTrackerComponent } from './operator-interface/bus-tracker/bus-tracker.component';
 const routes: Routes = [
   {
     path: 'admin',
@@ -88,9 +89,13 @@ const routes: Routes = [
   { path: 'test-location', component: TestMapComponent },
   { path:'bus-schedules',component:BusScheduleComponent},
   {
+    path:'operator/bus-tracking',component:BusTrackerComponent
+  },
+  {
     path: '**',
     component: NotFoundComponent,
   },
+  
 ];
 
 @NgModule({

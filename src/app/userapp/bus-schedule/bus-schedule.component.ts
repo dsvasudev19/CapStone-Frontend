@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { BusService } from '../../services/bus.service';
+import { RouteService } from '../../services/route.service';
 
 export interface Stop {
   name: string;
@@ -31,46 +33,59 @@ export interface BusSchedule {
 @Component({
   selector: 'app-bus-schedule',
   templateUrl: './bus-schedule.component.html',
-  styleUrl: './bus-schedule.component.css'
+  styleUrl: './bus-schedule.component.css',
 })
 export class BusScheduleComponent implements OnInit {
+  isAuthenticated: boolean = false;
 
-  isAuthenticated:boolean = false;
+  routes: any = [];
 
-  schedules = [
-    {
-      id: 1,
-      departureTime: "08:00",
-      destinationArrivalTime: "09:30",
-      operatingStatus: true,
-      bus: {
-        routeId: 101,
-        capacity: 45,
-        status: "Active",
-        route: {
-          name: "Downtown Express",
-          origin: "Central Station",
-          destination: "Business District",
-          stops: [
-            { name: "Central Station", time: "08:00" },
-            { name: "Market Square", time: "08:15" },
-            { name: "Business District", time: "08:30" }
-          ]
-        }
-      }
-    }
-  ];
+  buses: any = [];
 
-  constructor(private router:Router){}
+  isAccordionOpen: { [key: number]: boolean } = {};
+
+  toggleAccordion(routeId: number): void {
+    this.isAccordionOpen[routeId] = !this.isAccordionOpen[routeId];
+  }
+
+  constructor(
+    private router: Router,
+    private routeService: RouteService,
+    private busService: BusService
+  ) {}
+
   ngOnInit(): void {
-    let isLoggedIn=sessionStorage.getItem("isAuthentication")
-    if(isLoggedIn!==null && isLoggedIn){
-      this.isAuthenticated=true;
+    let isLoggedIn = sessionStorage.getItem('isAuthentication');
+    if (isLoggedIn !== null && isLoggedIn) {
+      this.isAuthenticated = true;
     }
+    this.getAllRoutesAndBusesAlongWithStopsAndSchedules();
   }
 
-  navigateToProfile(){
-    this.router.navigate(['/user/profile'])
+  navigateToProfile() {
+    this.router.navigate(['/user/profile']);
   }
 
+  getAllRoutesAndBusesAlongWithStopsAndSchedules(): any {
+    this.routeService.getAllRoutes().subscribe({
+      next: (routes) => {
+        console.log(routes);
+        this.routes = routes;
+        this.busService.getAllBuses().subscribe({
+          next: (buses) => {
+            let newBusesObjects = buses.map((bus: any) => {
+              let routeId = bus.routeId;
+              let routeFound = this.routes.filter(
+                (route: any) => route.id === routeId
+              );
+              bus.route = routeFound;
+              return bus;
+            });
+            this.buses = newBusesObjects;
+            console.log(newBusesObjects);
+          },
+        });
+      },
+    });
+  }
 }

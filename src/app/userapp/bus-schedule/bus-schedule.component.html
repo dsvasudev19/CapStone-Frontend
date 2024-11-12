@@ -28,6 +28,7 @@
                 Routes
               </a>
             </li>
+            <li><a href="/carpool" class="nav-link hover:text-red-600 transition duration-300">Carpool</a></li>
             <li>
               <ng-container *ngIf="isAuthenticated; else loginButton">
                 <button (click)="navigateToProfile()" class="m-1 hover:text-red-600 transition duration-300 flex items-center border-2 rounded-full">
@@ -55,77 +56,89 @@
 <div class="p-6 max-w-7xl mx-auto">
     <h1 class="text-3xl font-bold mb-8 text-red-800">Bus Schedules</h1>
     
-    <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-      <div *ngFor="let schedule of schedules" class="bg-white rounded-lg shadow-lg overflow-hidden border border-gray-200 hover:shadow-xl transition-shadow duration-300">
-        
-        <div class="bg-gradient-to-r from-red-500 to-red-700 p-4 text-white">
-          <div class="flex items-center justify-between">
-            <div class="flex items-center space-x-2">
-                <lucide-icon name="bus" class="text-xl opacity-90"></lucide-icon>
-              <span class="font-semibold">Bus #{{schedule.bus.routeId}}</span>
-            </div>
-            <span [class]="'px-3 py-1 rounded-full text-sm ' + 
-              (schedule.operatingStatus ? 'bg-green-500' : 'bg-red-900')">
-              {{schedule.operatingStatus ? 'Operating' : 'Not Operating'}}
-            </span>
-          </div>
-        </div>
-  
-        <div class="p-4 border-b border-gray-200 bg-red-50">
-          <div class="flex items-center space-x-2 text-red-700 mb-2">
-            <lucide-icon name="route" class="text-xl opacity-90"></lucide-icon>
-            <h2 class="font-semibold">{{schedule.bus.route.name}}</h2>
-          </div>
-          <div class="flex items-center justify-between text-sm text-gray-700">
-            <div class="flex items-center space-x-1">
-                <lucide-icon name="map-pin" class="text-xl opacity-90"></lucide-icon>
-              <span>{{schedule.bus.route.origin}}</span>
-            </div>
-            <span class="text-red-600">→</span>
-            <div class="flex items-center space-x-1">
-                <lucide-icon name="map-pin" class="text-xl opacity-90"></lucide-icon>
-              <span>{{schedule.bus.route.destination}}</span>
-            </div>
-          </div>
-        </div>
-        <div class="p-4 space-y-3">
-          <div class="flex justify-between items-center">
-            <div class="flex items-center space-x-2 text-gray-700">
-                <lucide-icon name="clock" class="text-xl opacity-90"></lucide-icon>
-              <span>Departure</span>
-            </div>
-            <span class="font-semibold text-red-700">{{schedule.departureTime}}</span>
-          </div>
-          <div class="flex justify-between items-center">
-            <div class="flex items-center space-x-2 text-gray-700">
-                <lucide-icon name="clock" class="text-xl opacity-90"></lucide-icon>
-              <span>Arrival</span>
-            </div>
-            <span class="font-semibold text-red-700">{{schedule.destinationArrivalTime}}</span>
-          </div>
-        </div>
-  
-        <div class="p-4 bg-red-50 border-t border-gray-200">
-          <h3 class="font-semibold text-red-700 mb-2">Stops</h3>
-          <div class="space-y-2">
-            <div *ngFor="let stop of schedule.bus.route.stops" class="flex items-center justify-between text-sm">
+    
+      <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <div *ngFor="let bus of buses" class="bg-white rounded-lg shadow-lg overflow-hidden border border-gray-200 hover:shadow-xl transition-shadow duration-300">
+          <div class="bg-gradient-to-r from-red-500 to-red-700 p-4 text-white">
+            <div class="flex items-center justify-between">
               <div class="flex items-center space-x-2">
-                <div class="w-2 h-2 rounded-full bg-red-600"></div>
-                <span class="text-gray-700">{{stop.name}}</span>
+                <lucide-icon name="bus" class="text-xl opacity-90"></lucide-icon>
+                <span class="font-semibold">Bus #{{bus.routeId}}</span>
               </div>
-              <span class="text-red-600">{{stop.time}}</span>
+              <span [class]="'px-3 py-1 rounded-full text-sm ' + (bus.status === 'Operating' ? 'bg-green-500' : 'bg-red-400')">
+                {{bus.status}}
+              </span>
             </div>
           </div>
-        </div>
-  
-        <div class="p-4 border-t border-gray-200">
-          <div class="flex items-center justify-between text-sm">
-            <span class="text-gray-600">Capacity</span>
-            <span class="font-semibold text-red-600">{{schedule.bus.capacity}} seats</span>
+      
+          <div class="p-4 border-b border-gray-200 bg-red-50">
+            <div *ngFor="let route of bus.route" class="mb-4">
+              <div class="flex items-center space-x-2 text-red-700 mb-2 cursor-pointer" (click)="toggleAccordion(route.id)">
+                <lucide-icon name="route" class="text-xl opacity-90"></lucide-icon>
+                <h2 class="font-semibold">{{route.name}}</h2>
+                <lucide-icon *ngIf="!isAccordionOpen[route.id]" name="chevron-down" class="text-xl opacity-90"></lucide-icon>
+                <lucide-icon *ngIf="isAccordionOpen[route.id]" name="chevron-up" class="text-xl opacity-90"></lucide-icon>
+              </div>
+              <div class="space-y-2" *ngIf="isAccordionOpen[route.id]">
+                <div class="flex items-center justify-between text-sm text-gray-700">
+                  <div class="flex items-center space-x-1">
+                    <lucide-icon name="map-pin" class="text-xl opacity-90"></lucide-icon>
+                    <span>{{route.origin}}</span>
+                  </div>
+                  <span class="text-red-600">→</span>
+                  <div class="flex items-center space-x-1">
+                    <lucide-icon name="map-pin" class="text-xl opacity-90"></lucide-icon>
+                    <span>{{route.destination}}</span>
+                  </div>
+                </div>
+                <h4 class="font-semibold text-red-700">Stops</h4>
+                <div *ngFor="let stop of route.stops" class="flex items-center justify-between text-sm">
+                  <div class="flex items-center space-x-2">
+                    <div class="w-2 h-2 rounded-full bg-red-600"></div>
+                    <span class="text-gray-700">{{stop.name}}</span>
+                  </div>
+                  <span class="text-red-600">{{stop.time}}</span>
+                </div>
+                <h4 class="font-semibold text-red-700">Stations</h4>
+                <div *ngFor="let station of route.stations" class="flex items-center justify-between text-sm">
+                  <div class="flex items-center space-x-2">
+                    <lucide-icon name="map-pin" class="text-xl opacity-90"></lucide-icon>
+                    <span class="text-gray-700">{{station.name}}</span>
+                  </div>
+                  <div class="flex items-center space-x-1">
+                    <lucide-icon name="map-pinned" class="text-xl opacity-90"></lucide-icon>
+                    <span class="text-red-600">{{station.latitude}}, {{station.longitude}}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="p-4 space-y-3">
+            <div class="flex justify-between items-center">
+              <div class="flex items-center space-x-2 text-gray-700">
+                <lucide-icon name="clock" class="text-xl opacity-90"></lucide-icon>
+                <span>Capacity</span>
+              </div>
+              <span class="font-semibold text-red-700">{{bus.capacity}} seats</span>
+            </div>
+          </div>
+      
+          <div class="p-4 bg-red-50 border-t border-gray-200">
+            <h3 class="font-semibold text-red-700 mb-2">Schedules</h3>
+            <div class="space-y-2">
+              <div *ngFor="let schedule of bus.busSchedules" class="flex items-center justify-between text-sm">
+                <div class="flex items-center space-x-2">
+                  <div class="w-2 h-2 rounded-full bg-red-600"></div>
+                  <span class="text-gray-700">{{schedule.departureTime}} - {{schedule.destinationArrivalTime}}</span>
+                </div>
+                <span [class]="'px-3 py-1 rounded-full text-sm ' + (schedule.operatingStatus ? 'bg-green-500 text-white' : 'bg-red-400 text-white')">
+                  {{schedule.operatingStatus ? 'Operating' : 'Not Operating'}}
+                </span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-    </div>
   </div>
 
 </div>

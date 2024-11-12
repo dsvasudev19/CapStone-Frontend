@@ -10,7 +10,8 @@ import * as L from 'leaflet';
   styleUrls: ['./location-map.component.css'] // corrected this, it was 'styleUrl'
 })
 export class LocationMapComponent{
-
+  @Input() latitude!:any;
+  @Input() longitude!:any;
   map: any;
   locationError: boolean = false;
 
@@ -90,7 +91,7 @@ export class LocationMapComponent{
           const offsetPos = calculateOffsetPosition(userLat, userLng, 100);
 
           // Add offset marker
-          const offsetMarker = L.marker([offsetPos.lat, offsetPos.lng], { icon: offsetIcon })
+          const offsetMarker = L.marker([this.latitude, this.longitude], { icon: offsetIcon })
             .addTo(this.map)
             .bindPopup('100m Away');
 

@@ -168,8 +168,9 @@ export class CarpoolComponent implements OnInit {
       }
       this.authService.getUserByToken(token?token:"").subscribe({
         next:(data)=>{
-          this.carPoolService.reserveASeatInCarPool(carpool.id,data.userId).subscribe({
-            next:()=>{
+          this.carPoolService.reserveASeatInCarPool(carpool.id,data.id).subscribe({
+            next:(data)=>{
+              console.log(data)
               alert("Ride Booked Successfully")
             },
             error:(error)=>{
