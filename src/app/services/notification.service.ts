@@ -15,4 +15,8 @@ export class NotificationService {
   getAllNotificationsOfUser(userId:number):Observable<any>{
     return this.http.get<any>(this.apiUrl+`/user/${userId}`)
   }
+
+  markNotificationAsRead(id:number):Observable<any>{
+    return this.http.get<any>(this.apiUrl+`/mark-as-read/${id}`)
+  }
 }

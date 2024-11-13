@@ -31,5 +31,9 @@ export class CarpoolService {
     return this.http.get<any>(this.apiUrl+`/recent-bookings/${userId}`)
   }
 
+  getCarPoolsOfUser(userId:number):Observable<any>{
+    return this.http.get<any>(this.apiUrl+`/user/${userId}`)
+  }
+
 
 }

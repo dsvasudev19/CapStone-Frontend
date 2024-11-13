@@ -1,2 +1,2 @@
-export class Schedule {
+export interface Schedule {
 }

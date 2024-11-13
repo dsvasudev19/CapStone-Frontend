@@ -82,7 +82,19 @@ export class BusSearchComponent {
   }
 
   onSearch(): void {
-    // Implement search logic
+    this.routeService.findRouteBasedOnSourceAndDestination(this.searchForm.value.source,this.searchForm.value.destination).subscribe({
+      next:(data)=>{
+        console.log(data)
+        this.filteredBuses=this.filteredBuses.filter((f:any)=>f.routeId!=data[0])
+        console.log(this.filteredBuses)
+      },
+      error:(error)=>{
+        console.log(error)
+      },
+      complete:()=>{
+
+      }
+    })
   }
 
   selectBus(bus: any): void {

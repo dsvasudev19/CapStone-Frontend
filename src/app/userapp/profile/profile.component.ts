@@ -37,11 +37,19 @@ export class ProfileComponent implements OnInit {
 
   recentBookings:any = []
 
+  carpools:any = []
+
+  showSuccessToast:boolean = false;
+
+  showErrorToast:boolean = false;
+
   routes: any[] = [
     { id: 1, name: 'Route 1', startPoint: 'Downtown', endPoint: 'Suburbs' },
     { id: 2, name: 'Route 2', startPoint: 'North Station', endPoint: 'South Mall' },
     { id: 3, name: 'Route 3', startPoint: 'East Park', endPoint: 'West Market' },
   ];
+
+  users:any = []
 
   constructor(private routeService:RouteService,
     private authService:AuthenticationService,
@@ -125,6 +133,55 @@ export class ProfileComponent implements OnInit {
     this.isEditing = true;
   }
 
+  getAllCarPoolServicesAlongWithUsersAndRoutes(userId:number): any {
+    this.routeService.getAllRoutes().subscribe({
+      next: (routes) => {
+        this.routes = routes;
+        console.log(routes);
+        this.userService.getAllUsers().subscribe({
+          next: (users) => {
+            console.log(users);
+            this.users = users;
+
+            this.carpoolService.getCarPoolsOfUser(userId).subscribe({
+              next: (carPools) => {
+                let newCarPoolObjects = carPools.map((carPool: any) => {
+                  let userId = carPool.driverId;
+                  let routeId = carPool.routeId;
+                  console.log(routeId)
+                  let userFound = this.users.find(
+                    (user: any) => user.id === userId
+                  );
+                  let routeFound = this.routes.find(
+                    (route: any) => route.id === routeId
+                  );
+                  console.log(routeFound, userFound);
+                  carPool.user = userFound;
+                  carPool.route = routeFound;
+
+                  return carPool;
+                });
+
+                console.log(newCarPoolObjects);
+
+                this.carpools = newCarPoolObjects;
+              },
+              error: (error) => {
+                console.error('Error fetching carpool services:', error);
+              },
+            });
+          },
+          error: (error) => {
+            console.error('Error fetching users:', error);
+          },
+        });
+      },
+      error: (error) => {
+        console.error('Error fetching routes:', error);
+      },
+    });
+  }
+
   getAllNotifications(userId:any):any{
     this.notificationService.getAllNotificationsOfUser(userId).subscribe({
       next:(data)=>{
@@ -192,6 +249,7 @@ export class ProfileComponent implements OnInit {
           console.log(data)
           this.getAllNotifications(data.id);
           this.getRecentBookings(data.id);
+          this.getAllCarPoolServicesAlongWithUsersAndRoutes(data.id);
         }
       })
     }else{
@@ -299,7 +357,39 @@ export class ProfileComponent implements OnInit {
     };
   }
 
-  
+  deleteCarpool(id:number){
+    this.carpoolService.deleteCarPoolService(id).subscribe({
+      next:(data)=>{
+        console.log("Successfully Deleted the CarPool Service")
+        this.showSuccessToast=true;
+      },
+      error:(error)=>{
+        console.log(error)
+        this.showErrorToast=true;
+      },
+      complete:()=>{
+        this.getUserDetails();
+        setTimeout(()=>{
+          this.showSuccessToast=false;
+          this.showErrorToast=false;
+        },1500)
+      }
+    })
+  }
+
+  readNotification(id: number) {
+    this.notificationService.markNotificationAsRead(id).subscribe({
+      next:(data)=>{
+        this.notifications = this.notifications.filter(notification => notification.id !== id);
+      },
+      error:(error)=>{
+        console.log(error)
+      },
+      complete:()=>{
+        
+      }
+    })
+  }
 
   
 }
