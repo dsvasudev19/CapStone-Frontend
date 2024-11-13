@@ -98,7 +98,7 @@
                 </div>
                 <div class="flex justify-between items-center bg-red-50 p-3 rounded-lg">
                   <span class="text-gray-700 font-medium">Price</span>
-                  <span class="text-red-600 font-semibold">{{200 | currency:'INR'}}</span>
+                  <span class="text-red-600 font-semibold">{{carpool.price | currency:'INR'}}</span>
                 </div>
               </div>
               <button (click)="bookRide(carpool.id)"

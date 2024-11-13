@@ -260,34 +260,34 @@
     </div>
 
     <!-- Recent Activity -->
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 ">
       <!-- Reservations -->
-      <div class="bg-white rounded-lg shadow-lg p-6">
+      <div class="bg-white rounded-lg shadow-lg p-6 h-[60vh] overflow-y-auto">
         <h2 class="text-xl font-bold mb-4 flex items-center text-gray-800">
           <span class="text-red-600 mr-2">📅</span>
           Recent Reservations
         </h2>
         <div class="space-y-4">
           <div
-            *ngFor="let reservation of recentReservations"
+            *ngFor="let booking of recentBookings"
             class="bg-gray-50 rounded-lg p-4"
           >
             <p class="text-gray-800">
-              {{ reservation.type }}: {{ reservation.route }}
+             CarPool: {{ booking.carpool.pickupLocation }}
             </p>
-            <p class="text-sm text-gray-500">{{ reservation.time }}</p>
+            <p class="text-sm text-gray-500">{{ booking.requestTime }}</p>
             <span
-              class="inline-block px-2 py-1 text-xs font-semibold rounded-full"
-              [ngClass]="reservation.statusClass"
+              class="inline-block px-2 py-1 text-xs text-green-600 bg-green-100 font-semibold rounded-full"
+              
             >
-              {{ reservation.status }}
+              {{ booking.carpool.price | currency:"INR" }}
             </span>
           </div>
         </div>
       </div>
 
       <!-- Notifications -->
-      <div class="bg-white rounded-lg shadow-lg p-6">
+      <div class="bg-white rounded-lg shadow-lg p-6 h-[60vh] overflow-y-auto">
         <h2 class="text-xl font-bold mb-4 flex items-center text-gray-800">
           <span class="text-red-600 mr-2">📩</span>
           Notifications
@@ -383,17 +383,30 @@
             />
           </div>
         </div>
-        <div>
-          <label class="block text-gray-700 font-bold mb-2"
-            >Pickup Location</label
-          >
-          <input
-            type="text"
-            [(ngModel)]="newCarpoolService.pickupLocation"
-            name="pickupLocation"
-            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50"
-            required
-          />
+        <div class="flex gap-3">
+          <div class="w-full">
+            <label class="block text-gray-700 font-bold mb-2"
+              >Pickup Location</label
+            >
+            <input
+              type="text"
+              [(ngModel)]="newCarpoolService.pickupLocation"
+              name="pickupLocation"
+              class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50"
+              required
+            />
+          </div>
+          <div class="w-full">
+            <label class="block text-gray-700 font-bold mb-2">Price Per Seat</label>
+            <input
+              type="number"
+              [(ngModel)]="newCarpoolService.price"
+              name="price"
+              class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50"
+              required
+            />
+          </div>
+
         </div>
         <div class="flex justify-end space-x-4 mt-6">
           <button

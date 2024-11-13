@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthenticationService } from '../../auth/authentication.service';
 
 @Component({
   selector: 'app-main-layout',
@@ -11,7 +12,9 @@ export class MainLayoutComponent {
 
   isSideBarOpen: boolean = false;
 
-  constructor(private router: Router) {
+  currentUser!:any;
+
+  constructor(private router: Router,private authService:AuthenticationService) {
     this.router.events.subscribe(() => {
       this.currentPath = this.router.url;
     });
@@ -20,6 +23,23 @@ export class MainLayoutComponent {
   ngOnInit(): void {
     this.currentPath = this.router.url;
     console.log(this.currentPath);
+
+    const token=localStorage.getItem("__auth")
+    if(token){
+      this.getUserByToken(token);
+    }
+  }
+
+  getUserByToken(token:string){
+    this.authService.getUserByToken(token).subscribe({
+      next:(data)=>{
+        this.currentUser=data;
+        console.log(data)
+      },
+      error:(error)=>{
+        console.log(error)
+      }
+    })
   }
 
   toggleSidebar(): void {

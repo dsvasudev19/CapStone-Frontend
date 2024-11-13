@@ -8,6 +8,7 @@ import { NotificationService } from '../../services/notification.service';
 import { RouteService } from '../../services/route.service';
 import { UserService } from '../../services/user.service';
 
+declare var Razorpay: any;
 interface Reservation {
   type: string;
   route: string;
@@ -33,6 +34,8 @@ export class ProfileComponent implements OnInit {
   usageChart: any;
 
   isLoading:boolean = false;
+
+  recentBookings:any = []
 
   routes: any[] = [
     { id: 1, name: 'Route 1', startPoint: 'Downtown', endPoint: 'Suburbs' },
@@ -90,7 +93,8 @@ export class ProfileComponent implements OnInit {
     capacity: 0,
     availableSeats: 0,
     departureTime: '',
-    pickupLocation: ''
+    pickupLocation: '',
+    price:0
   };
 
   
@@ -187,11 +191,27 @@ export class ProfileComponent implements OnInit {
           this.userData=data;
           console.log(data)
           this.getAllNotifications(data.id);
+          this.getRecentBookings(data.id);
         }
       })
     }else{
       this.router.navigate(['/user/auth/login'])
     }
+  }
+
+  getRecentBookings(userId:number){
+    this.carpoolService.getRecentBookingsOfUser(userId).subscribe({
+      next:(data)=>{
+        console.log(data)
+        this.recentBookings=data;
+      },
+      error:(error)=>{
+        console.log(error)
+      },
+      complete:()=>[
+
+      ]
+    })
   }
 
   getAllRoutes():any{
@@ -278,5 +298,8 @@ export class ProfileComponent implements OnInit {
       pickupLocation: ''
     };
   }
+
+  
+
   
 }

@@ -6,6 +6,7 @@ import { CarpoolService } from '../../services/carpool.service';
 import { RouteService } from '../../services/route.service';
 import { UserService } from '../../services/user.service';
 
+declare var Razorpay:any;
 @Component({
   selector: 'app-carpool',
   templateUrl: './carpool.component.html',
@@ -159,7 +160,7 @@ export class CarpoolComponent implements OnInit {
 
 
   bookRide(carpoolId: number) {
-    const carpool = this.availableCarpools.find(c => c.id === carpoolId);
+    const carpool = this.filteredCarPools.find((c:any) => c.id === carpoolId);
     if (carpool && carpool.availableSeats > 0) {
       const token=localStorage.getItem("auth")
       if(!token){
@@ -167,11 +168,12 @@ export class CarpoolComponent implements OnInit {
         this.router.navigate(['/user/auth/login'])
       }
       this.authService.getUserByToken(token?token:"").subscribe({
+        
         next:(data)=>{
           this.carPoolService.reserveASeatInCarPool(carpool.id,data.id).subscribe({
             next:(data)=>{
               console.log(data)
-              alert("Ride Booked Successfully")
+              this.createPaymentOrder(data.paymentTransaction.amount,data.paymentTransaction.orderId)
             },
             error:(error)=>{
               console.log(error)
@@ -184,6 +186,45 @@ export class CarpoolComponent implements OnInit {
       })
      
     }
+  }
+
+  createPaymentOrder(sum: number, orderId: string): any {
+    console.log("coming in payment order")
+    var options = {
+      key: 'rzp_test_alc9PznICVvKQb',
+      amount: sum,
+      currency: 'INR',
+      name: 'UrbanTransit',
+      description: 'Payment Transaction',
+      image: 'https://example.com/your_logo',
+      order_id: orderId,
+      handler: function (response: any) {
+        // These lines needs to be uncommented and need to send an
+        // fetch request to verify the status of the payment
+        // then redirect the user accordingly
+        // alert('Payment Success'+response.razorpay_payment_id);
+        // alert(response.razorpay_order_id);
+        // alert(response.razorpay_signature);
+        return true;
+      },
+      prefill: {
+        name: '',
+        email: '',
+        contact: '',
+      },
+      notes: {
+        address: '',
+      },
+      theme: {
+        color: '#3399cc',
+      },
+    };
+    const rzp1 = new Razorpay(options);
+
+    rzp1.open();
+    rzp1.on('payment.failed', (response: any) => {
+      alert('Payment failed: ' + response.error.description);
+    });
   }
 
   getRatingStars(rating: number): string[] {
