@@ -73,7 +73,7 @@
   
         <!-- Available Carpools Section -->
         <div class="mb-16">
-          <h2 class="text-3xl font-bold mb-8 gradient-text text-center">Available Rides</h2>
+          <h2 class="text-3xl font-bold mb-8 gradient-text text-center">{{filteredCarPools.length>0?"Available Rides":"Sorry .. No Services found the Route entered"}}</h2>
           <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             <!-- Carpool Cards -->
             <div *ngFor="let carpool of filteredCarPools" 

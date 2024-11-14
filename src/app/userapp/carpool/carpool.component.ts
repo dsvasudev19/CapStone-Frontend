@@ -90,9 +90,13 @@ export class CarpoolComponent implements OnInit {
       this.isSearching = true;
       this.routeService.findRouteBasedOnSourceAndDestination(this.searchForm.value.source,this.searchForm.value.destination).subscribe({
         next:(data)=>{
-          console.log(data)
+          if(data.length>0){
+            console.log(data)
           this.filteredCarPools=this.filteredCarPools.filter((f:any)=>f.routeId!=data[0])
           console.log(this.filteredCarPools)
+          }else{
+            this.filteredCarPools=[]
+          }
         },
         error:(error)=>{
           console.log(error)

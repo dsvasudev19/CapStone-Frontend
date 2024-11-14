@@ -19,6 +19,13 @@ export class BusSearchComponent {
   buses:any=[];
   routes:any=[];
   filteredBuses:any=[]
+  isOpen = false;
+  currentStep = 0;
+  insideBus: boolean | null = null;
+  nextStop = '';
+  location: { latitude: number; longitude: number } | null = null;
+  hasAsked = false;
+
   morningPeak:number=Math.floor(Math.random()*(99-40 +1)+40)
   afternoonPeak:number=Math.floor(Math.random()*(99-40 +1)+40)
   eveningPeak:number=Math.floor(Math.random()*(99-40 +1)+40)
@@ -79,14 +86,25 @@ export class BusSearchComponent {
       this.isAuthenticated=true;
     }
     this.getAllRoutesAndBuses();
+
+    const asked = sessionStorage.getItem("asked") === "true";
+    this.hasAsked = asked;
+    if (!asked) {
+      this.isOpen = true;
+    }
   }
 
   onSearch(): void {
     this.routeService.findRouteBasedOnSourceAndDestination(this.searchForm.value.source,this.searchForm.value.destination).subscribe({
       next:(data)=>{
         console.log(data)
-        this.filteredBuses=this.filteredBuses.filter((f:any)=>f.routeId!=data[0])
-        console.log(this.filteredBuses)
+        if(data.length>0){
+          this.filteredBuses=this.filteredBuses.filter((f:any)=>f.routeId!=data[0])
+          console.log(this.filteredBuses)
+        }else{
+          this.filteredBuses=[]
+        }
+        
       },
       error:(error)=>{
         console.log(error)
@@ -162,6 +180,60 @@ export class BusSearchComponent {
     }
   }
 
+  getCurrentLocation() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          this.location = {
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude
+          };
+          this.sendRealTimeData(position.coords.latitude, position.coords.longitude);
+        },
+        (error) => {
+          console.error("Error getting location:", error);
+        }
+      );
+    }
+  }
+
+  async sendRealTimeData(latitude: number, longitude: number) {
+    try {
+      const data = {
+        busId:this.selectedBus.id,
+        insideBus: this.insideBus,
+        nextStop: this.nextStop,
+        latitude,
+        longitude,
+        timestamp: new Date().toISOString()
+      };
+      console.log(data)
+      // const response = await this.http.post('/api/realtime-data', data).toPromise();
+      sessionStorage.setItem("asked", "true");
+      this.hasAsked = true;
+      this.isOpen = false;
+    } catch (error) {
+      console.error("Error sending data:", error);
+    }
+  }
+
+  handleAnswer(answer: boolean) {
+    this.insideBus = answer;
+    if (answer) {
+      this.currentStep = 1;
+    } else {
+      this.getCurrentLocation();
+      this.currentStep = 2;
+    }
+  }
+
+  handleNextStop() {
+    if (this.nextStop.trim()) {
+      this.getCurrentLocation();
+      this.currentStep = 2;
+    }
+  }
+
   backToList(): void {
     this.selectedBus = null;
     this.showMap = false;
@@ -175,4 +247,8 @@ export class BusSearchComponent {
     return Math.floor(Math.random() * (99 - 40 + 1)) + 35;
   }
 
+  redirectToLiveTracking() {
+    const url = `https://urbanpulse-livetracking.vercel.app?bus=${this.selectedBus.id}&status=live_tracking`;
+    window.open(url, '_blank');  
+  }
 }
