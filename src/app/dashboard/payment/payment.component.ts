@@ -90,7 +90,7 @@ export class PaymentComponent implements OnInit {
     return new Intl.NumberFormat('en-US', { 
       style: 'currency', 
       currency: currency 
-    }).format(amount);
+    }).format(amount/100);
   }
 
   onViewDetails(transactionId: number): void {
