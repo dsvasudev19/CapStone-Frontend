@@ -2,9 +2,10 @@
   <!-- Header -->
   <header class="bg-white/90 backdrop-blur-md shadow-lg py-4 sticky top-0 z-50">
     <div class="container mx-auto flex justify-between items-center px-4">
-      <a href="/" class="text-4xl font-extrabold gradient-text logo-animation"
-        >UrbanPulse</a
-      >
+      <a href="/" class="flex items-center space-x-2">
+        <img src="/smarttransit.png" alt="SmartTransit Logo" class="h-12 w-auto object-contain" />
+        <span class="text-3xl font-extrabold text-gray-800 gradient-text">SmartTransit</span>
+      </a>
 
       <nav class="hidden md:block">
         <ul class="flex space-x-8 text-lg">
@@ -30,14 +31,14 @@
               Schedules
             </a>
           </li>
-          <li>
+          <!-- <li>
             <a
               href="/routes"
               class="font-semibold text-gray-600 nav-link hover:text-red-600 transition duration-300"
             >
               Routes
             </a>
-          </li>
+          </li> -->
           <li>
             <a
               href="/carpool"
@@ -432,7 +433,7 @@
             <circle cx="17" cy="19" r="1"></circle>
             <path d="M3 9l4-5h10l4 5"></path>
           </svg>
-          <p class="text-gray-700 font-medium mb-2">Welcome to UrbanPulse!</p>
+          <p class="text-gray-700 font-medium mb-2">Welcome to SmartTransit!</p>
           <p class="text-gray-600 text-sm">
             Search for rides and enjoy your journey with us. Select a bus to share your travel details.
           </p>
@@ -459,7 +460,7 @@
           </div>
         </div>
 
-        <div *ngIf="currentStep === 1" class="space-y-4">
+        <div *ngIf="currentStep === 1 && insideBus" class="space-y-4">
           <p class="text-gray-700">What's your next stop?</p>
           <div class="flex space-x-2">
             <input
@@ -498,7 +499,7 @@
       <!-- Thank you message when already asked -->
       <div *ngIf="selectedBus && hasAsked" class="text-center py-4">
         <p class="text-gray-700">Thanks for sharing your travel details!</p>
-        <p class="text-gray-600 text-sm mt-2">Enjoy your journey with UrbanPulse.</p>
+        <p class="text-gray-600 text-sm mt-2">Enjoy your journey with SmartTransit.</p>
       </div>
     </div>
   </div>

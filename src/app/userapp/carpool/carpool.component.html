@@ -4,13 +4,16 @@
       <!-- Header -->
       <header class="bg-white/90 backdrop-blur-md shadow-lg py-4 sticky top-0 z-50">
         <div class="container mx-auto flex justify-between items-center px-4">
-          <a href="/" class="text-4xl font-extrabold gradient-text logo-animation">UrbanPulse</a>
+          <a href="/" class="flex items-center space-x-2">
+            <img src="/smarttransit.png" alt="SmartTransit Logo" class="h-12 w-auto object-contain" />
+            <span class="text-3xl font-extrabold text-gray-800 gradient-text">SmartTransit</span>
+          </a>
           <nav class="hidden md:block">
             <ul class="flex space-x-8 text-lg text-gray-700">
               <li><a href="/bus-search" class="nav-link hover:text-red-600 transition duration-300">Bus Search</a></li>
               <li><a href="/carpool" class="nav-link hover:text-red-600 transition duration-300">Carpool</a></li>
-              <li><a href="/feedback" class="nav-link hover:text-red-600 transition duration-300">Feedback</a></li>
-              <li><a href="/bus-tracking" class="nav-link hover:text-red-600 transition duration-300">Bus Tracking</a></li>
+              <!-- <li><a href="/feedback" class="nav-link hover:text-red-600 transition duration-300">Feedback</a></li>
+              <li><a href="/bus-tracking" class="nav-link hover:text-red-600 transition duration-300">Bus Tracking</a></li> -->
               <li>
                 <ng-container *ngIf="isAuthenticated; else loginButton">
                   <button (click)="navigateToProfile()" class="m-1 hover:text-red-600 transition duration-300 flex items-center border-2 rounded-full">

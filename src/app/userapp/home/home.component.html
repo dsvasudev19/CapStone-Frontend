@@ -1,31 +1,77 @@
 <div class="main-wrapper overflow-hidden">
     <div class="bg-gradient-to-b from-red-50 to-white min-h-screen flex flex-col">
       <!-- Header -->
-      <header class="bg-white/90 backdrop-blur-md shadow-lg py-4 sticky top-0 z-50">
+      <header class="bg-white/90 backdrop-blur-md shadow-lg py-2 sticky top-0 z-50">
         <div class="container mx-auto flex justify-between items-center px-4">
-          <a href="/" class="text-4xl font-extrabold gradient-text logo-animation">UrbanPulse</a>
+          <!-- Logo Section -->
+          <a href="/" class="flex items-center space-x-2">
+            <img src="/smarttransit.png" alt="SmartTransit Logo" class="h-12 w-auto object-contain" />
+            <span class="text-3xl font-extrabold text-gray-800 gradient-text">SmartTransit</span>
+          </a>
+      
+          <!-- Navigation -->
           <nav class="hidden md:block">
-            <ul class="flex space-x-8 text-lg text-gray-700">
-              <li><a href="/" class="nav-link text-red-600 transition duration-300">Home</a></li>
-              <li><a href="/bus-search" class="nav-link hover:text-red-600 transition duration-300">Bus Search</a></li>
-              <li><a href="/carpool" class="nav-link hover:text-red-600 transition duration-300">Carpool</a></li>
+            <ul class="flex items-center space-x-8 text-lg text-gray-700">
+              <li>
+                <a href="/" class="nav-link text-red-600 transition duration-300 hover:text-red-700">
+                  Home
+                </a>
+              </li>
+              <li>
+                <a href="/bus-search" class="nav-link hover:text-red-600 transition duration-300">
+                  Bus Search
+                </a>
+              </li>
+              <li>
+                <a href="/carpool" class="nav-link hover:text-red-600 transition duration-300">
+                  Carpool
+                </a>
+              </li>
               <li>
                 <ng-container *ngIf="isLoggedIn; else loginButton">
-                  <button (click)="navigateToProfile()" class="m-1 hover:text-red-600 transition duration-300 flex items-center border-2 rounded-full">
-                    <!-- User Profile Icon - You can use any icon library or SVG -->
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                  <button 
+                    (click)="navigateToProfile()" 
+                    class="flex items-center p-2 hover:text-red-600 transition duration-300 border-2 border-gray-200 rounded-full hover:border-red-600"
+                  >
+                    <svg 
+                      xmlns="http://www.w3.org/2000/svg" 
+                      class="h-6 w-6" 
+                      fill="none" 
+                      viewBox="0 0 24 24" 
+                      stroke="currentColor"
+                    >
+                      <path 
+                        stroke-linecap="round" 
+                        stroke-linejoin="round" 
+                        stroke-width="2" 
+                        d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" 
+                      />
                     </svg>
                   </button>
                 </ng-container>
                 <ng-template #loginButton>
-                  <a href="/user/auth/login" class="nav-link hover:text-red-600 transition duration-300">Login</a>
+                  <a href="/user/auth/login" class="nav-link hover:text-red-600 transition duration-300">
+                    Login
+                  </a>
                 </ng-template>
-              </li>            </ul>
+              </li>
+            </ul>
           </nav>
-          <button class="md:hidden mobile-menu-button">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"/>
+      
+          <!-- Mobile Menu Button -->
+          <button class="md:hidden p-2 rounded-lg hover:bg-gray-100">
+            <svg 
+              class="w-6 h-6" 
+              fill="none" 
+              stroke="currentColor" 
+              viewBox="0 0 24 24"
+            >
+              <path 
+                stroke-linecap="round" 
+                stroke-linejoin="round" 
+                stroke-width="2" 
+                d="M4 6h16M4 12h16m-7 6h7"
+              />
             </svg>
           </button>
         </div>
@@ -43,7 +89,7 @@
       </div>
 
       <!-- Hero Section -->
-      <section class="particle-background bg-gradient-to-r from-red-700 to-blue-900 text-white py-32 relative overflow-hidden">
+      <!-- <section class="particle-background bg-gradient-to-r from-red-700 to-blue-900 text-white py-32 relative overflow-hidden">
         <div class="absolute top-0 left-0 w-full h-full particle-overlay"></div>
         <div class="container mx-auto text-center px-4 relative z-10">
           <h1 class="text-5xl md:text-6xl font-extrabold mb-6 hero-title slide-in">
@@ -61,6 +107,86 @@
             </a>
           </div>
         </div>
+      </section> -->
+
+      <section class="bg-white relative overflow-hidden">
+        <!-- Background Pattern -->
+        <div class="absolute inset-0 bg-gradient-to-br from-blue-50 to-red-50">
+          <div class="absolute inset-0 pattern-background"></div>
+        </div>
+      
+        <div class="container mx-auto px-4 py-18 lg:py-8">
+          <div class="max-w-4xl mx-auto relative z-10">
+            <!-- Main Content -->
+            <div class="text-center space-y-8">
+              <!-- Eyebrow text -->
+              <p class="text-red-600 font-semibold text-lg mb-4 animate-fade-in">
+                SMART URBAN TRANSIT SOLUTION
+              </p>
+      
+              <!-- Main Title -->
+              <h1 class="text-4xl lg:text-6xl font-bold text-gray-900 leading-tight animate-slide-up">
+                Transform Your Daily
+                <span class="bg-clip-text text-transparent bg-gradient-to-r from-red-600 to-blue-600">
+                  Urban Commute
+                </span>
+              </h1>
+      
+              <!-- Subtitle -->
+              <p class="text-lg lg:text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed animate-fade-in-delay">
+                Experience seamless city navigation with real-time bus tracking, 
+                carpool matching, and community-driven transit solutions.
+              </p>
+      
+              <!-- CTA Buttons -->
+              <div class="flex flex-col sm:flex-row justify-center gap-4 pt-8 animate-fade-in-delay-2">
+                <a 
+                  href="/bus-search" 
+                  class="inline-flex items-center justify-center px-8 py-4 text-lg font-medium text-white bg-red-600 rounded-lg shadow-lg hover:bg-red-700 transform hover:scale-105 transition-all duration-300"
+                >
+                  <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                  </svg>
+                  Find Buses
+                </a>
+                <a 
+                  href="/carpool" 
+                  class="inline-flex items-center justify-center px-8 py-4 text-lg font-medium text-white bg-blue-600 rounded-lg shadow-lg hover:bg-blue-700 transform hover:scale-105 transition-all duration-300"
+                >
+                  <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                  </svg>
+                  Find Carpools
+                </a>
+              </div>
+      
+              <!-- Trust Indicators -->
+              <div class="mt-16 pt-8 border-t border-gray-100">
+                <div class="flex flex-wrap justify-center gap-8 items-center text-gray-600">
+                  <div class="flex items-center">
+                    <svg class="w-5 h-5 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                    <span>Real-time Tracking</span>
+                  </div>
+                  <div class="flex items-center">
+                    <svg class="w-5 h-5 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+                    </svg>
+                    <span>Secure Platform</span>
+                  </div>
+                  <div class="flex items-center">
+                    <svg class="w-5 h-5 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                    <span>Cost Effective</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      
       </section>
 
       <!-- How It Works Section -->
@@ -90,7 +216,7 @@
       <!-- Why Choose Us Section -->
       <section class="bg-gradient-to-b from-red-100 to-red-50 py-24">
         <div class="container mx-auto text-center px-4">
-          <h2 class="text-4xl font-extrabold gradient-text mb-12 section-title">Why Choose UrbanPulse?</h2>
+          <h2 class="text-4xl font-extrabold gradient-text mb-12 section-title">Why Choose SmartTransit?</h2>
           <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
             <div class="feature-card bg-white shadow-lg rounded-xl p-8">
               <img src="/insignia.png" alt="Reliable" class="w-16 h-16 mx-auto mb-6 floating-animation">
@@ -150,7 +276,7 @@
         </div>
       </section>
 
-      <!-- CTA Section -->
+<!--       
       <section class="bg-gradient-to-r from-red-500 to-blue-700 text-white py-24">
         <div class="container mx-auto text-center px-4">
           <h2 class="text-4xl font-extrabold mb-6 section-title">Ready to Make Your Commute Smarter?</h2>
@@ -164,12 +290,104 @@
             </a>
           </div>
         </div>
+      </section> -->
+      <section class="relative overflow-hidden bg-white py-20 lg:py-24">
+        <!-- Background Pattern -->
+        <div class="absolute inset-0 pattern-background opacity-5"></div>
+        
+        <!-- Accent Lines -->
+        <div class="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-red-500 via-blue-500 to-red-500"></div>
+        <div class="absolute bottom-0 inset-x-0 h-1 bg-gradient-to-r from-blue-500 via-red-500 to-blue-500"></div>
+      
+        <div class="container mx-auto px-4 relative">
+          <div class="max-w-4xl mx-auto">
+            <div class="bg-white rounded-2xl p-8 lg:p-12 shadow-lg border border-gray-100">
+              <!-- Content Container -->
+              <div class="text-center space-y-6">
+                <!-- Stats Section -->
+                <div class="flex flex-wrap justify-center gap-8 mb-12">
+                  <div class="text-center px-6">
+                    <p class="text-3xl font-bold text-red-600">50K+</p>
+                    <p class="text-sm text-gray-600 mt-1">Active Users</p>
+                  </div>
+                  <div class="text-center px-6">
+                    <p class="text-3xl font-bold text-blue-600">98%</p>
+                    <p class="text-sm text-gray-600 mt-1">Satisfaction Rate</p>
+                  </div>
+                  <div class="text-center px-6">
+                    <p class="text-3xl font-bold text-red-600">24/7</p>
+                    <p class="text-sm text-gray-600 mt-1">Service Available</p>
+                  </div>
+                </div>
+      
+                <!-- Main CTA Content -->
+                <h2 class="text-3xl lg:text-4xl font-bold text-gray-900">
+                  Ready to Transform Your Daily Commute?
+                </h2>
+                
+                <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+                  Join thousands of satisfied commuters who have already discovered a smarter way to travel. Start your journey today.
+                </p>
+      
+                <!-- CTA Buttons -->
+                <div class="flex flex-col sm:flex-row justify-center gap-4 pt-6">
+                  <a 
+                    href="/bus-search" 
+                    class="group relative px-8 py-4 bg-gradient-to-r from-red-600 to-red-700 text-white rounded-lg shadow-lg transition-all duration-300 hover:translate-y-[-2px] hover:shadow-xl"
+                  >
+                    <div class="flex items-center justify-center">
+                      <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 4H6a2 2 0 00-2 2v12a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-2m-4-1v8m0 0l3-3m-3 3L9 8" />
+                      </svg>
+                      <span class="font-semibold">Find Buses</span>
+                    </div>
+                  </a>
+                  <a 
+                    href="/carpool" 
+                    class="group relative px-8 py-4 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-lg shadow-lg transition-all duration-300 hover:translate-y-[-2px] hover:shadow-xl"
+                  >
+                    <div class="flex items-center justify-center">
+                      <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                      </svg>
+                      <span class="font-semibold">Find Carpools</span>
+                    </div>
+                  </a>
+                </div>
+      
+                <!-- Trust Badges -->
+                <div class="pt-12 mt-12 border-t border-gray-100">
+                  <div class="flex flex-wrap justify-center items-center gap-8">
+                    <div class="flex items-center text-gray-600">
+                      <svg class="w-5 h-5 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                      </svg>
+                      <span class="text-sm">Secure & Safe</span>
+                    </div>
+                    <div class="flex items-center text-gray-600">
+                      <svg class="w-5 h-5 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                      <span class="text-sm">24/7 Support</span>
+                    </div>
+                    <div class="flex items-center text-gray-600">
+                      <svg class="w-5 h-5 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5" />
+                      </svg>
+                      <span class="text-sm">Satisfaction Guaranteed</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </section>
 
       <!-- Footer -->
       <footer class="bg-gray-900 text-white py-8">
         <div class="container mx-auto flex flex-col md:flex-row justify-between items-center px-4">
-          <p class="mb-4 md:mb-0">&copy; 2023 UrbanPulse. All rights reserved.</p>
+          <p class="mb-4 md:mb-0">&copy; 2023 SmartTransit. All rights reserved.</p>
           <nav>
             <ul class="flex flex-wrap justify-center gap-4 md:space-x-8">
               <li><a href="/about" class="hover:text-red-400 transition duration-300">About</a></li>

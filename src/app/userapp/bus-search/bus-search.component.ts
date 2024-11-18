@@ -92,6 +92,7 @@ export class BusSearchComponent {
     if (!asked) {
       this.isOpen = true;
     }
+    this.getCurrentLocation();
   }
 
   onSearch(): void {
@@ -181,20 +182,25 @@ export class BusSearchComponent {
   }
 
   getCurrentLocation() {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          this.location = {
-            latitude: position.coords.latitude,
-            longitude: position.coords.longitude
-          };
-          this.sendRealTimeData(position.coords.latitude, position.coords.longitude);
-        },
-        (error) => {
-          console.error("Error getting location:", error);
-        }
-      );
-    }
+    return new Promise((resolve, reject) => {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            this.location = {
+              latitude: position.coords.latitude,
+              longitude: position.coords.longitude
+            };
+            resolve(this.location);  // Resolve the promise with location data
+          },
+          (error) => {
+            console.error("Error getting location:", error);
+            reject(error);  // Reject the promise on error
+          }
+        );
+      } else {
+        reject('Geolocation is not supported by this browser.');
+      }
+    });
   }
 
   async sendRealTimeData(latitude: number, longitude: number) {
@@ -227,10 +233,26 @@ export class BusSearchComponent {
     }
   }
 
-  handleNextStop() {
+  async handleNextStop() {
     if (this.nextStop.trim()) {
-      this.getCurrentLocation();
       this.currentStep = 2;
+  
+      try {
+        await this.getCurrentLocation();
+  
+        const data = { ...this.location, nextStop: this.nextStop };
+  
+        this.busService.postLiveLocationOfBus(this.selectedBus.id, data).subscribe({
+          next: (data) => {
+            console.log("Successfully updated the data");
+          },
+          error: (error) => {
+            console.log("Error updating the data:", error);
+          }
+        });
+      } catch (error) {
+        console.error("Error in getting location or posting live location:", error);
+      }
     }
   }
 
@@ -248,7 +270,7 @@ export class BusSearchComponent {
   }
 
   redirectToLiveTracking() {
-    const url = `https://urbanpulse-livetracking.vercel.app?bus=${this.selectedBus.id}&status=live_tracking`;
+    const url = `https://SmartTransit-livetracking.vercel.app?bus=${this.selectedBus.id}&status=live_tracking`;
     window.open(url, '_blank');  
   }
 }

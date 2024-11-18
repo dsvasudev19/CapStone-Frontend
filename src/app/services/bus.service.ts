@@ -8,6 +8,8 @@ import { Observable } from 'rxjs';
 })
 export class BusService {
   private apiUrl = environment.baseUrl + '/buses';
+  private baseUrl=environment.baseUrl;
+
   constructor(private http: HttpClient) {}
 
   getAllBuses(): Observable<any> {
@@ -24,5 +26,9 @@ export class BusService {
 
   deleteBusById(id:number):Observable<any>{
     return this.http.delete(this.apiUrl+`/${id}`)
+  }
+
+  postLiveLocationOfBus(busId:number,data:any):Observable<any>{
+    return this.http.post(this.baseUrl+`/realtime/${busId}`,data);
   }
 }
