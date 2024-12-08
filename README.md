@@ -1,29 +1,118 @@
-# FrontEnd
+# SmartTransit
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.2.7.
+**SmartTransit** is a cutting-edge Angular-based web application designed to provide live bus location tracking, carpool services, and smooth payment processing for daily commuters. It leverages the Ola Maps SDK for live location tracking and integrates the Razorpay Payment Gateway for secure and seamless transactions. The project is structured in a modular manner, making it scalable, maintainable, and easy to extend.
 
-## Development server
+## Features
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+- **Live Bus Location Tracking**: Track buses in real-time with the integration of Ola Maps SDK.
+- **Carpool Services**: Book carpool rides for daily commutes, helping reduce traffic and save costs.
+- **Razorpay Payment Gateway**: Easily pay for bus rides or carpool services with integrated Razorpay payment gateway.
+- **User Profile**: Personalized user profiles to manage bookings, payment details, and settings.
+- **Modular Project Structure**: A scalable and organized Angular project with reusable modules for ease of development.
 
-## Code scaffolding
+## Technologies Used
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+- **Angular**: Frontend framework for building the web application.
+- **Ola Maps SDK**: For live bus tracking and map services.
+- **Razorpay**: Payment gateway for handling payments.
+- **Bootstrap**: For responsive and modern UI design.
+- **Node.js**: Backend server for handling API requests (if applicable).
 
-## Build
+## Project Structure
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+The project follows a modular structure, with different components for buses, carpool services, user profile, and payments.
 
-## Running unit tests
+```
+src/
+  ├── app/
+      ├── userapp/
+      ├── dashboard/
+      ├── guards/
+      ├── layouts/
+      ├── spinners/
+      ├── app.module.ts
+      └── app.component.ts
+  ├── assets/
+      └── images/
+  └── environments/
+```
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+- **bus-tracking**: Handles all the logic for bus live location tracking and displays it on the map.
+- **carpool-services**: Contains all the carpool services functionality, such as booking, listing, and payment.
+- **user-profile**: Manages the user profile, including user information and ride history.
 
-## Running end-to-end tests
+  
+## Setup
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+To run the SmartTransit project locally:
 
-## Further help
+### Prerequisites
+- Node.js installed (v14.x or higher).
+- Angular CLI installed globally (`npm install -g @angular/cli`).
+- Razorpay API keys (for integrating payment services).
+- Ola Maps SDK API key (for live location tracking).
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
-"# CapStone-Frontend" 
-# CapStone-Frontend
+### Steps to Run
+
+1. Clone the repository:
+
+   ```bash
+   git clone https://github.com/dsvasudev19/CapStone-Frontend.git
+   ```
+
+2. Install dependencies:
+
+   ```bash
+   npm install
+   ```
+
+3. Add your Razorpay API keys and Ola Maps SDK key to the environment files:
+   - `src/environments/environment.ts` (for development)
+   - `src/environments/environment.prod.ts` (for production)
+
+4. Run the application locally:
+
+   ```bash
+   ng serve
+   ```
+
+5. Open your browser and go to `http://localhost:4200` to see the app in action.
+
+## Screenshots
+
+### Home Page
+![Home Page](https://res.cloudinary.com/dxqrg09mq/image/upload/v1733584868/screencapture-localhost-4200-2024-11-18-15_38_45_mdw2tt.png)
+
+### Bus Listing
+![Bus Listing](https://res.cloudinary.com/dxqrg09mq/image/upload/v1733584857/screencapture-localhost-4200-bus-search-2024-11-18-15_39_14_hmjadw.png)
+
+### CarPool Services Listing
+![Carpool Services](https://res.cloudinary.com/dxqrg09mq/image/upload/v1733584433/screencapture-localhost-4200-carpool-2024-11-18-15_39_44_vccvr5.png)
+
+### UserProfile Page
+![UserProfile](https://res.cloudinary.com/dxqrg09mq/image/upload/v1733584441/screencapture-localhost-4200-user-profile-2024-11-18-15_42_09_fxdbbp.png)
+
+## Contributing
+
+We welcome contributions! To contribute, follow these steps:
+
+1. Fork the repository.
+2. Create a new branch (`git checkout -b feature-name`).
+3. Make your changes.
+4. Commit your changes (`git commit -am 'Add new feature'`).
+5. Push to your forked repository (`git push origin feature-name`).
+6. Open a pull request.
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Acknowledgments
+
+- Ola Maps SDK for providing the live location tracking service.
+- Razorpay for providing an easy-to-integrate payment gateway.
+- Bootstrap for fast and responsive UI development.
+
+---
+
+Feel free to reach out for any queries or contributions to the **SmartTransit** project!
