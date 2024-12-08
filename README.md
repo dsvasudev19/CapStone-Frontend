@@ -81,16 +81,19 @@ To run the SmartTransit project locally:
 ## Screenshots
 
 ### Home Page
-![Home Page](https://res.cloudinary.com/dxqrg09mq/image/upload/v1733584868/screencapture-localhost-4200-2024-11-18-15_38_45_mdw2tt.png)
+![Home Page](https://res.cloudinary.com/dxqrg09mq/image/upload/v1733644846/screencapture-localhost-4200-2024-12-08-12_59_49_ao3wpx.png)
 
 ### Bus Listing
-![Bus Listing](https://res.cloudinary.com/dxqrg09mq/image/upload/v1733584857/screencapture-localhost-4200-bus-search-2024-11-18-15_39_14_hmjadw.png)
+![Bus Listing](https://res.cloudinary.com/dxqrg09mq/image/upload/v1733644823/screencapture-localhost-4200-bus-search-2024-12-08-13_09_25_tsntmp.png)
 
 ### CarPool Services Listing
-![Carpool Services](https://res.cloudinary.com/dxqrg09mq/image/upload/v1733584433/screencapture-localhost-4200-carpool-2024-11-18-15_39_44_vccvr5.png)
+![Carpool Services](https://res.cloudinary.com/dxqrg09mq/image/upload/v1733644825/screencapture-localhost-4200-carpool-2024-12-08-13_09_43_p1ldah.png)
 
 ### UserProfile Page
-![UserProfile](https://res.cloudinary.com/dxqrg09mq/image/upload/v1733584441/screencapture-localhost-4200-user-profile-2024-11-18-15_42_09_fxdbbp.png)
+![UserProfile](https://res.cloudinary.com/dxqrg09mq/image/upload/v1733644800/screencapture-localhost-4200-user-profile-2024-12-08-13_10_17_deevcq.png)
+
+### Bus Schedules Page
+![Bus Schedules](https://res.cloudinary.com/dxqrg09mq/image/upload/v1733644790/screencapture-localhost-4200-bus-schedules-2024-12-08-13_09_57_jf2fhd.png)
 
 ## Contributing
 
