@@ -29,6 +29,7 @@ export class BusSearchComponent {
   morningPeak:number=Math.floor(Math.random()*(99-40 +1)+40)
   afternoonPeak:number=Math.floor(Math.random()*(99-40 +1)+40)
   eveningPeak:number=Math.floor(Math.random()*(99-40 +1)+40)
+  randomOccupany:number=Math.floor(Math.random()*(99-40 +1)+46)
   constructor(private fb: FormBuilder,private router:Router,private busService:BusService,private routeService:RouteService) {
     this.searchForm = this.fb.group({
       source: ['', Validators.required],
@@ -134,6 +135,7 @@ export class BusSearchComponent {
                 (route: any) => route.id === bus.routeId
               );
               bus.route = routeFound;
+              bus.occupancy=this.getRandomNumber();
               return bus;
             });
             this.buses = newBusesObjects;
@@ -240,8 +242,8 @@ export class BusSearchComponent {
       try {
         await this.getCurrentLocation();
   
-        const data = { ...this.location, nextStop: this.nextStop };
-  
+        const data = { ...this.location, nextStop: this.nextStop,occupancy:Math.floor(this.getRandomNumber()) };
+        console.log(data)
         this.busService.postLiveLocationOfBus(this.selectedBus.id, data).subscribe({
           next: (data) => {
             console.log("Successfully updated the data");
